@@ -26,6 +26,12 @@ namespace eShop.Business.Services.Seller_Service
             storeRepository = new StoreRepository(unitOfWork);
             stockRepository = new StockRepository(unitOfWork);
         }
+
+        public int AddStock(StockDomainModel data)
+        {
+            stockRepository.Insert(mapper.Map<Stock>(data));
+            return 1;
+        }
         public StockDomainModel GetStock(int pId)
         {            
             return mapper.Map<StockDomainModel>(stockRepository.SingleOrDefault(x => x.product_id == pId));

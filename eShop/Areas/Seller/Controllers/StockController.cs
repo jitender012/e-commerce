@@ -46,5 +46,14 @@ namespace FurnitureShop.Areas.Seller.Controllers
             }
             return Json(storeStock, JsonRequestBehavior.AllowGet);
         }
+
+        public int AddToInventory(StockDomainModel data)
+        {
+            if (data!=null)
+            {
+                return stockService.AddStock(data);
+            }
+            else { return 0; }
+        }
     }
 }

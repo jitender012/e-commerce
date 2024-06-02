@@ -37,6 +37,7 @@ namespace eShop.Business.Interfaces
     }
     public interface IStockService
     {
+        int AddStock(StockDomainModel data);
         void UpdateStock(Stock stock);
         List<StockDomainModel> GetStocks(int storeId = 0);
         StockDomainModel GetStock(int pId);

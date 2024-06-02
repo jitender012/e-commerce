@@ -94,7 +94,7 @@
         </div>
 
     </div>
-
+    
     <div class="row mb-3">
         <div class="col-md-2">
             <div class="stat-box text-center py-1">
@@ -301,8 +301,9 @@
                     var tr = $('<tr>');
 
                     tr.append('<td>' + storeStock.store_name + '</td>');
-                    tr.append('<td>' + storeStock.qty + '</td>');
-                    tr.append('<td><button class="btn">' + 'Update' + '</button></td>');
+                    /*tr.append('<td>' + storeStock.qty + '</td>');*/
+                    tr.append('<input type="text" class="form-control" value="' + storeStock.qty +'"/>');
+                    tr.append('<td><button class="btn">' + 'Update' + '</button></td>').on("click", function () { addStock(storeStock.storeId, pId, storeStock.qty) });
 
                     // Append the row to the tbody
                     $('#abcid').append(tr);
@@ -317,6 +318,15 @@
         },
         loading:
     });
+
+        function addStock(storeId, productId, qty) {
+                 $.ajax({
+                 url: '@Url.Action("AddToInventory", "Stock")',
+                 type: 'GET',
+                 dataType: "json",
+                     data: "data" : { 'pId': pId },
+                 success: function (obj) { }
+        }
 }
 
 </script>
