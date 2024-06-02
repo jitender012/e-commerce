@@ -1,0 +1,75 @@
+﻿@model IEnumerable<FurnitureShop.Areas.Seller.Data.ProductListWithStockViewModel>
+
+@{
+    ViewBag.Title = "Seller Products";
+    Layout = "~/Areas/Seller/Views/Shared/_SellerLayout.cshtml";
+}
+<style>
+    .clickable-row{
+        cursor:pointer;
+    }
+</style>
+<h2>Your Products</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table id="dataTable" class="table table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.product_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.list_price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.url)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        
+        <tr class="clickable-row" data-href="@Url.Action("Details", "Products", new { id = item.product_id })">
+            <td>
+                @Html.DisplayFor(modelItem => item.product_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.list_price)
+            </td>
+          
+            <td>
+                @if (item.url != null)
+                {
+                    <img src="@Url.Content(item.url)" width="150" height="150">
+                }
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.product_id }) 
+                
+                @using (Html.BeginForm("Delete", "Products", new { id = item.product_id }, FormMethod.Post, new { onsubmit = "return confirm('Are you sure you want to delete this product?');" }))
+                {
+                    <input type="submit" value="Delete" class="btn btn-link" style="color: red;" />
+                }
+
+                @Html.ActionLink("Add Item To Store","UpdateQuantity","Stock")
+            </td>
+        </tr>
+     
+    }
+
+</table>
+@{var x = Model.Select(x => x.product_name).ToString();}
+
+
+
+<script>
+    $(document).ready(function () {
+        $(".clickable-row").click(function () {
+            window.location = $(this).data("href");
+        });
+    });
+</script>

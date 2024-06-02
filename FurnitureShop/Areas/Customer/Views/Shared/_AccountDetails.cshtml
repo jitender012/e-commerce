@@ -1,0 +1,40 @@
+﻿@model FurnitureShop.Areas.Customer.Data.UserDetails
+<style>
+    .acdi211 {
+        padding: 12px;
+        margin: 10px
+    }
+</style>
+<div class="card p-4 m-2">
+    <div class="">
+        Personal Information
+    </div>
+    <div class="row mb-4">
+        <input type="text" class="acdi211" name="name" value="@Model.UserName" disabled />
+        <input type="text" class="acdi211" name="name" value="@Model.Email" disabled />
+        <input type="text" class="acdi211" name="name" placeholder="phone" value="@Model.Mobile" disabled />
+    </div>
+
+
+    <div class="">
+        Email Address
+    </div>
+    <div class="row mb-4">
+        <input type="text" class="acdi211" name="name" value="@Model.Email" disabled />
+    </div>
+
+
+    <div class="">
+        Mobile Number
+    </div>
+    <div class="row mb-4">
+
+        <input type="text" class="acdi211" name="name" placeholder="Mobile Number" value="@Model.Mobile" disabled />
+
+    </div>
+
+    @*@Ajax.BeginForm("UpdateDetails", "Account", new AjaxOptions
+        {
+            HttpMethod="POST"
+        })*@
+</div>

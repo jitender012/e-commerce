@@ -1,0 +1,179 @@
+﻿@using Microsoft.AspNet.Identity
+<style>
+    .menu {
+        display: flex;
+        justify-content: end;
+        list-style: none;
+    }
+
+    .dropdown12 {
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        position: relative;
+        font-size: 18px;
+        perspective: 1000px;
+        z-index: 100;
+    }
+
+        .dropdown12:hover {
+            background: #e8e8e8;
+            cursor: pointer;
+        }
+
+            .dropdown12:hover .dropdown_menu li {
+                display: block;
+            }
+
+    .dropdown_menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        perspective: 1000px;
+        z-index: -1;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        overflow: hidden;
+    }
+
+        .dropdown_menu li {
+            display: none;
+            color: white;
+            background-color: #34495e;
+            padding: 10px 20px;
+            font-size: 16px;
+            opacity: 0;
+        }
+
+            .dropdown_menu li:hover {
+                background-color: #2980b9;
+            }
+
+
+
+    .dropdown12:hover .dropdown_menu--animated {
+        display: block;
+    }
+
+    .dropdown_menu--animated {
+        display: none;
+    }
+
+        .dropdown_menu--animated li {
+            display: block;
+            opacity: 0.9;
+        }
+
+    .dropdown_menu-6 {
+        animation: growDown 300ms ease-in-out forwards;
+        transform-origin: top center;
+    }
+
+    @@keyframes growDown {
+        0% {
+            transform: scaleY(0);
+        }
+
+        80% {
+            transform: scaleY(1.1);
+        }
+
+        100% {
+            transform: scaleY(1);
+        }
+    }
+
+    body {
+    }
+</style>
+
+@if (User.Identity.IsAuthenticated)
+{
+
+
+    <ul class="menu">
+        <li class="dropdown12 dropdown-6">
+            <div class="py-2 ">
+
+                <a href="#">
+                    <span>
+                        <i class="fa fa-user fa-sm"></i>
+                    </span>
+                    <span class="m-1">User</span>
+                </a>
+            </div>
+
+            <ul class="dropdown_menu dropdown_menu--animated dropdown_menu-6">
+                <a href="@Url.Action("Index","Profile", new {area="Customer"})">
+                <li class="dropdown_item-2">Your Profile</li>
+                </a>
+                <li class="dropdown_item-2">Orders</li>
+                <li class="dropdown_item-2">Wishlist</li>
+                <li class="dropdown_item-2">Your Reviews</li>
+                <li class="dropdown_item-1" data-toggle="modal" data-target="#logoutModal">Log Out</li>
+            </ul>
+        </li>
+        @if (User.IsInRole("Customer"))
+        {
+            <li>
+                <div class="py-2 ">
+                    <a href="@Url.Action( "Index", "Cart", new { area = "Customer" })" id="loginLink" class="nav-link">
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="15" height="15" style="color:dimgray"><!--!Font Awesome Free 6.5.1 by  https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z" /></svg>
+                        </span>
+                        <span class="m-1">Cart</span>
+                    </a>
+                </div>
+            </li>
+        }
+    </ul>
+
+
+}
+else
+{
+    <ul class="navbar-nav navbar-right nav-right-items  d-flex flex-row justify-content-end ">
+        <li>
+            <a href="@Url.Action( "Login", "Account", new { area = " " })" id="loginLink" class="nav-link">
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="15" height="15" style="color:dimgray"><!--!Font Awesome Free 6.5.1 by  https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z" /></svg>
+                </span>
+                <span>Cart</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="@Url.Action( "Login","Account")" id="loginLink" class="nav-link">
+                <span><i class="fa fa-sign-in" style="color:dimgrey" aria-hidden="true"></i></span>
+                <span>Login</span>
+            </a>
+        </li>
+    </ul>
+}
+
+@*Logout modal*@
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Logout Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to log off?</p>
+                @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <ul class="navbar-nav navbar-right">
+                        <li><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                    </ul>
+                }
+            </div>
+        </div>
+    </div>
+</div>

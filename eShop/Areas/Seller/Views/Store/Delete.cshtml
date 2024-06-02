@@ -1,0 +1,89 @@
+﻿@model FurnitureShop.Areas.Seller.Data.StoreViewModel
+@{
+    Layout = "~/Areas/Seller/Views/Shared/_SellerLayout.cshtml";
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>storeModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.store_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.store_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.store_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.store_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.street)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.street)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.city)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.city)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.state)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.state)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.zip_code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.zip_code)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,347 @@
+﻿@model IEnumerable<FurnitureShop.Areas.Administration.Data.UsersListViewModel>
+@{
+    ViewBag.Title = "UserList";
+    Layout = "~/Areas/Administration/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="">
+
+    <div class="app-content pt-3 p-md-3 p-lg-4">
+        <div class="container-xl">
+
+            <div class="row g-3 mb-4 align-items-center justify-content-between">
+                <div class="col-auto">
+                    <h1 class="app-page-title mb-0">Users</h1>
+                </div>
+                <div class="col-auto">
+                    <div class="page-utilities">
+                        <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
+                            <div class="col-auto">
+                                @using (Html.BeginForm("UserList", "ManageUsers", FormMethod.Post, new { @class = "table-search-form row gx-1 align-items-center", role = "search" }))
+                                {
+                                    <div class="col-auto">
+                                        <input type="text"  name="Search" class="form-control search-orders" placeholder="Search">
+                                    </div>
+                                    <div class="col-auto">
+                                        <button type="submit" class="btn app-btn-secondary">Search</button>
+                                    </div>
+                                }
+                              
+                            </div><!--//col-->
+                            <div class="col-auto">
+
+                                <select class="form-select w-auto">
+                                    <option selected value="option-1">All</option>
+                                    <option value="option-2">Employees</option>
+                                    <option value="option-3">Sellers</option>
+                                    <option value="option-4">Customers</option>
+                                    <option value="option-4">Admin</option>
+                                </select>
+                            </div>
+                            <div class="col-auto">
+                                <a class="btn app-btn-secondary" href="#">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                        <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                    </svg>
+                                    Download CSV
+                                </a>
+                            </div>
+                        </div><!--//row-->
+                    </div><!--//table-utilities-->
+                </div><!--//col-auto-->
+            </div><!--//row-->
+
+
+            <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
+                <a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab" href="#orders-all" role="tab" aria-controls="orders-all" aria-selected="true">All</a>
+                <a class="flex-sm-fill text-sm-center nav-link" id="orders-paid-tab" data-bs-toggle="tab" href="#orders-paid" role="tab" aria-controls="orders-paid" aria-selected="false">Employees</a>
+                <a class="flex-sm-fill text-sm-center nav-link" id="orders-pending-tab" data-bs-toggle="tab" href="#orders-pending" role="tab" aria-controls="orders-pending" aria-selected="false">Sellers</a>
+                <a class="flex-sm-fill text-sm-center nav-link" id="orders-cancelled-tab" data-bs-toggle="tab" href="#orders-cancelled" role="tab" aria-controls="orders-cancelled" aria-selected="false">Customers</a>
+                <a class="flex-sm-fill text-sm-center nav-link" id="admin-tab" data-bs-toggle="tab" href="#admin" role="tab" aria-controls="admin" aria-selected="false">Admin</a>
+            </nav>
+
+            <div class="tab-content" id="orders-table-tab-content">
+                @*All Users*@
+                <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
+                    <div class="app-card app-card-orders-table shadow-sm mb-5">
+                        <div class="app-card-body">
+                            <div class="table-responsive">
+
+                                <table class="table app-table-hover mb-0 text-left" id="dataTable">
+
+                                    <thead>
+                                        <tr>
+                                            <th class="cell">
+                                                Id
+                                            </th>
+                                            <th class="cell">
+                                                Email
+                                            </th>
+                                            <th class="cell">
+                                                User Name
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                        @foreach (var item in Model)
+                                        {
+
+
+                                            <tr>
+                                                <td class="align-middle cell">
+                                                    <div>
+                                                        @Html.DisplayFor(modelItem => item.Id)
+                                                    </div>
+                                                </td>
+                                                <td class="cell">
+                                                    @Html.DisplayFor(modelItem => item.Email)
+
+                                                </td>
+                                                <td class="cell">
+                                                    @Html.DisplayFor(modelItem => item.UserName)
+
+                                                </td>
+                                                <td class="align-middle">
+                                                    <div class="text-center ">
+                                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "mx-2 btn btn-outline-success mb-sm-1" })
+                                                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "mx-2 btn btn-outline-secondary mb-sm-1" })
+                                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "mx-2 btn btn-outline-danger mb-sm-1" })
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+
+                                        }
+                                    </tbody>
+
+                                </table>
+                            </div><!--//table-responsive-->
+                        </div><!--//app-card-body-->
+                    </div><!--//app-card-->
+
+
+                </div><!--//tab-pane-->
+                @*Employees*@
+                <div class="tab-pane fade" id="orders-paid" role="tabpanel" aria-labelledby="orders-paid-tab">
+                    <div class="app-card app-card-orders-table mb-5">
+                        <div class="app-card-body">
+                            <div class="table-responsive">
+
+                                <table class="table " id="">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Emial</th>
+                                            <th>User Name</th>
+
+                                        </tr>
+                                    </thead>
+
+                                    @foreach (var item in Model)
+                                    {
+                                        if (item.Role[0] == "Employee")
+                                        {
+                                            <tr>
+                                                <td class="align-middle cell">
+                                                    <div>
+                                                        @Html.DisplayFor(modelItem => item.Id)
+                                                    </div>
+                                                </td>
+                                                <td class="cell">
+                                                    @Html.DisplayFor(modelItem => item.Email)
+
+                                                </td>
+                                                <td class="cell">
+                                                    @Html.DisplayFor(modelItem => item.UserName)
+
+                                                </td>
+                                                <td class="align-middle">
+                                                    <div class="text-center ">
+                                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "mx-2 btn btn-outline-success mb-sm-1" })
+                                                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "mx-2 btn btn-outline-secondary mb-sm-1" })
+                                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "mx-2 btn btn-outline-danger mb-sm-1" })
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    }
+                                </table>
+                            </div><!--//table-responsive-->
+                        </div><!--//app-card-body-->
+                    </div><!--//app-card-->
+                </div><!--//tab-pane-->
+
+                <div class="tab-pane fade" id="orders-pending" role="tabpanel" aria-labelledby="orders-pending-tab">
+                    <div class="app-card app-card-orders-table mb-5">
+                        <div class="app-card-body">
+                            <div class="table-responsive">
+                                <table class="table " id="">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Emial</th>
+                                            <th>User Name</th>
+
+                                        </tr>
+                                    </thead>
+
+                                    @foreach (var item in Model)
+                                    {
+                                        if (item.Role[0] == "Seller")
+                                        {
+                                            <tr>
+                                                <td class="align-middle cell">
+                                                    <div>
+                                                        @Html.DisplayFor(modelItem => item.Id)
+                                                    </div>
+                                                </td>
+                                                <td class="cell">
+                                                    @Html.DisplayFor(modelItem => item.Email)
+
+                                                </td>
+                                                <td class="cell">
+                                                    @Html.DisplayFor(modelItem => item.UserName)
+
+                                                </td>
+                                                <td class="align-middle">
+                                                    <div class="text-center ">
+                                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "mx-2 btn btn-outline-success mb-sm-1" })
+                                                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "mx-2 btn btn-outline-secondary mb-sm-1" })
+                                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "mx-2 btn btn-outline-danger mb-sm-1" })
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    }
+                                </table>
+                            </div><!--//table-responsive-->
+                        </div><!--//app-card-body-->
+                    </div><!--//app-card-->
+                </div>
+
+                <div class="tab-pane fade" id="orders-cancelled" role="tabpanel" aria-labelledby="orders-cancelled-tab">
+                    <div class="app-card app-card-orders-table mb-5">
+                        <div class="app-card-body">
+                            <div class="table-responsive">
+                                <table class="table " id="">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Emial</th>
+                                            <th>User Name</th>
+
+                                        </tr>
+                                    </thead>
+
+                                    @foreach (var item in Model)
+                                    {
+                                        if (item.Role[0] == "Customer")
+                                        {
+                                            <tr>
+                                                <td class="align-middle cell">
+                                                    <div>
+                                                        @Html.DisplayFor(modelItem => item.Id)
+                                                    </div>
+                                                </td>
+                                                <td class="cell">
+                                                    @Html.DisplayFor(modelItem => item.Email)
+
+                                                </td>
+                                                <td class="cell">
+                                                    @Html.DisplayFor(modelItem => item.UserName)
+
+                                                </td>
+                                                <td class="align-middle">
+                                                    <div class="text-center ">
+                                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "mx-2 btn btn-outline-success mb-sm-1" })
+                                                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "mx-2 btn btn-outline-secondary mb-sm-1" })
+                                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "mx-2 btn btn-outline-danger mb-sm-1" })
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    }
+                                </table>
+                            </div><!--//table-responsive-->
+                        </div><!--//app-card-body-->
+                    </div><!--//app-card-->
+                </div>
+
+                <div class="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab">
+                    <div class="app-card app-card-orders-table mb-5">
+                        <div class="app-card-body">
+                            <div class="table-responsive">
+
+                                <table class="table " id="">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Emial</th>
+                                            <th>User Name</th>
+
+                                        </tr>
+                                    </thead>
+
+                                    @foreach (var item in Model)
+                                    {
+                                        if (item.Role[0] == "Admin")
+                                        {
+                                            <tr>
+                                                <td class="align-middle cell">
+                                                    <div>
+                                                        @Html.DisplayFor(modelItem => item.Id)
+                                                    </div>
+                                                </td>
+                                                <td class="cell">
+                                                    @Html.DisplayFor(modelItem => item.Email)
+
+                                                </td>
+                                                <td class="cell">
+                                                    @Html.DisplayFor(modelItem => item.UserName)
+
+                                                </td>
+                                                <td class="align-middle">
+                                                    <div class="text-center ">
+                                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "mx-2 btn btn-outline-success mb-sm-1" })
+                                                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "mx-2 btn btn-outline-secondary mb-sm-1" })
+                                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "mx-2 btn btn-outline-danger mb-sm-1" })
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    }
+                                </table>
+                            </div><!--//table-responsive-->
+                        </div><!--//app-card-body-->
+                    </div><!--//app-card-->
+                </div><!--//tab-pane-->
+            </div><!--//tab-content-->
+          
+           
+        </div><!--//container-fluid-->
+    </div><!--//app-content-->
+
+    <footer class="app-footer">
+        <div class="container text-center py-3">
+            <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
+            <small class="copyright">Designed with <span class="sr-only">love</span><i class="fas fa-heart" style="color: #fb866a;"></i> by <a class="app-link" href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
+
+        </div>
+    </footer><!--//app-footer-->
+
+</div><!--//app-wrapper-->
+
+<script>
+    $(document).ready({
+
+    })
+</script>

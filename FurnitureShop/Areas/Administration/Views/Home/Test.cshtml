@@ -1,0 +1,116 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Test</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    @*<link href="~/portal-theme-bs5-v3.0/assets/css/portal.css" rel="stylesheet" />*@
+
+    <style>
+        .box1 {
+            outline: 1px solid black;
+        }
+
+        div {
+            vertical-align:; /* or top, bottom, baseline, etc. */
+        }
+    </style>
+
+
+    <!-- Add these scripts to your layout page -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/jQuery plugins/extm.min.js"></script>
+
+
+</head>
+<body>
+    <div class="row">
+        <div class="col-4 col-md-2 order-md-1 text-start bg-secondary p-3  text-md-center">
+            Logo
+        </div>
+        <div class="col-8 col-md-3 order-md-3 text-end bg-success p-3  text-md-center">
+            <i class="fa fa-solid fa-cart-shopping"></i> | <i class="fa fa-sign-in " aria-hidden="true"></i>
+        </div>
+        <div class="col-12 col-md-7 order-md-2 bg-primary p-3 text-center">
+            Search
+        </div>
+
+    </div>
+    <div class="mt-2" id="div1">
+
+    </div>
+
+
+
+    <div>
+        <h2>Welcome to ASP.NET MVC AJAX!</h2>
+
+        @Ajax.ActionLink("Load Data", "GetData", new AjaxOptions
+        {
+            UpdateTargetId = "resultDiv",
+            HttpMethod = "GET",
+            LoadingElementId = "loadingImage"
+        })
+
+        <div id="loadingImage" style="display: none;">
+            <img src="~/Images/Utilities/icons8-loading-infinity.gif" alt="Loading..." />
+        </div>
+        @*<img src="~/Images/Utilities/icons8-loading-infinity.gif" />*@
+        <div id="resultDiv"></div>
+    </div>
+
+    <img class="example" src="~/Images/Utilities/No-Image-Placeholder.svg.png" width="200" height="300" />
+    @*__________________________*@
+
+    <div class="d-flex flex-wrap justify-content-between py-1 btnsDiv w-100 bg-danger">
+        <div class="">
+            <button class="p-btn1"> ADD TO CART</button>
+        </div>
+        <div class="">
+            <button class="p-btn1">BUY NOW</button>
+        </div>
+    </div>
+
+
+
+
+    <script>
+        $(document).ready(function () {
+            $('.example').extm({
+                position: 'right',
+                rightPad: 20,
+            });
+        })
+
+        var jsonObject = [{
+            "Name": "B1",
+            "Category": "Books",
+            "Price": 200
+        }, {
+            "Name": "M1",
+            "Category": "Mobiles",
+            "Price": 20000
+        }
+        ]
+        var result = '';
+
+        for (var i = 0; i < jsonObject.length; i++) {
+            result += 'Name = ' + jsonObject[i].Name + '<br/>';
+            result += 'Category = ' + jsonObject[i].Category + '<br/>';
+            result += 'Price = ' + jsonObject[i].Price + '<br/>';
+        }
+
+        var jsonString = jsonObject.toString();
+        console.log(jsonString);
+        document.getElementById("div1").innerHTML = result;
+    </script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+﻿@model List<FurnitureShop.Areas.Customer.Data.UserCartViewModel>
+@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+<style>
+    .parent {
+        background-color: #f1f3f6;
+        width: 100%;
+     
+    }
+
+    .content-div {
+        width: 80%;
+    }
+
+    .r-box {
+        border-radius: 3px;
+        background-color: white;
+        box-shadow: 0px 1px 2px 0px #a0a0a08c;
+    }
+
+    .n-box {
+        background-color: #f1f3f6;
+        color: cornflowerblue;
+        padding: 0px 7px 2px 7px;
+        height: 26px;
+        position: absolute;
+        font-size: 14px;
+    }
+
+    .p2uyH2 .LcLcvv {
+        width: 28px;
+        height: 28px;
+        background: linear-gradient(#fff, #f9f9f9);
+        display: inline-block;
+        border: 1px solid #c2c2c2;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 50%;
+        padding-top: 1px;
+        line-height: 1;
+    }
+
+
+    .p6sArZ {
+        width: 40px;
+        padding: 0px 2px 0px 5px;
+        border: 1px solid lightgrey;
+        border-radius: 3px;
+    }
+
+    .place-order-div {
+        box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .place-order-btn {
+        padding: 8px 14px 8px 14px;
+        background-color: coral;
+        border: none;
+        color: white;
+    }
+</style>
+<div class="parent">
+    <div class="container-fluid content-div">
+        <div class="row py-3">
+            <div class="col-8 px-2">
+                <div class="r-box d-flex align-content-center mb-3" style="padding:10px 0 10px 0; border-bottom:2px solid orange;">
+                    <div class="w-100 d-flex justify-content-center">
+                        <div>
+                            <div>
+                                Your Cart
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="r-box d-flex flex-wrap justify-content-between  mb-3" style="padding: 10px 15px 10px 15px;">
+                    <div class="d-flex">
+                        <div>
+
+                            <div style="max-width:500px">
+                                <p>Deliver To</p>
+                                @Model[0].user_address.Address1 @Model[0].user_address.City
+                            </div>
+
+                        </div>
+                    </div>
+                    <div><button class="btn btn-default" style="color:cornflowerblue">Change</button></div>
+                </div>
+
+                @*Container for Item list*@
+                <div class="r-box">
+
+                    @*Container for each item*@
+                    @foreach (var item in Model)
+                    {
+
+                        <div style="border-bottom: 1px solid #e6e6e6">
+                            <div style="padding: 20px 15px 0px 15px;">
+                                <div class="d-flex">
+                                    <div>
+                                        <img src="@Url.Content(item.product.ProductImage)" width="120" height="120" />
+                                    </div>
+                                    <div class="px-2">
+                                        <div>
+                                            <a>@item.product.ProductName</a>
+                                        </div>
+                                        <div style="font-size:12px">
+                                           @item.product.Description
+                                        </div>
+                                        <div style="font-size:12px">
+                                            @item.product.user_id
+                                        </div>
+                                        <div>
+                                           @item.product.ListPrice
+                                        </div>
+                                    </div>
+                                    <div>
+                                    </div>
+                                </div>
+                                <div class="d-flex py-3">
+                                    <div class="d-flex align-content-center" style="width:120px">
+                                        <div class="p2uyH2 d-flex ">
+                                            <button class="LcLcvv" disabled=""> - </button>
+                                            <div class="">
+                                                <input type="text" class="p6sArZ mx-2" value="1">
+                                            </div>
+                                            <button class="LcLcvv"> + </button>
+                                        </div>
+                                    </div>
+                                    <div class="_5jL4tC gRTtwM f-DWwy">
+                                        <button class="sBxzFz btn">Save for later</button>
+                                        <button class="sBxzFz btn">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+                    @*end of Container for each item/*@
+
+                    
+                    <div class="px-4 py-3 place-order-div" style="position:sticky">
+                        <button class="place-order-btn">PLACE ORDER</button>
+                    </div>
+                </div>
+            </div>
+
+            @*Price details section*@
+            <div class="col-4 px-2">
+                <div class="r-box p-4">
+                    <div class="">
+                        PRICE DETAILS
+                        <hr />
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-between">
+
+                        <p>Price (1 item)</p>
+                        <p>₹1,999</p>
+
+                    </div>
+                    <hr />
+                    <div class="d-flex flex-wrap justify-content-between">
+                        <p><b>Total Payable</b></p>
+                        <p><b>₹1,999</b></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+

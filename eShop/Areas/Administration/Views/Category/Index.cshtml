@@ -1,0 +1,42 @@
+﻿@model IEnumerable<FurnitureShop.Areas.Administration.Data.CategoryListViewModel>
+
+@{
+    ViewBag.Title = "Categories";
+    Layout = "~/Areas/Administration/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 style="color:orangered">Categories</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table" id="dataTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.category_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.category_img)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.category_name)
+            </td>
+            <td>
+                <img src="@Url.Content(@item.category_img)" alt="@item.category_img" width="150" height="150" />
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.category_id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.category_id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.category_id })
+            </td>
+        </tr>
+    }
+
+</table>

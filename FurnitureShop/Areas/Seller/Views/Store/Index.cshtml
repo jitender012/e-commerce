@@ -1,0 +1,76 @@
+﻿@model IEnumerable<FurnitureShop.Areas.Seller.Data.StoreViewModel>
+
+@{
+    Layout = "~/Areas/Seller/Views/Shared/_SellerLayout.cshtml";
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-secondary" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.store_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.store_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.street)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.city)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.state)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.zip_code)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.store_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.store_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.street)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.city)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.state)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.zip_code)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new {  id=item.store_id}, new { @class = "btn btn-primary" }) 
+            @Html.ActionLink("Details", "Details", new {  id=item.store_id }, new { @class = "btn btn-success" }) 
+            @Html.ActionLink("Delete", "Delete", new { id = item.store_id } , new { @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>

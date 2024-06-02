@@ -1,0 +1,35 @@
+﻿@model FurnitureShop.Areas.Administration.Data.CreateCategoryViewModel
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Administration/Views/Shared/_AdminLayout.cshtml";
+
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Category</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.category_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.category_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.category_img)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.category_img)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.category_id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

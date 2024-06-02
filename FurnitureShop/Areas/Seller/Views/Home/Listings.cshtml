@@ -1,0 +1,222 @@
+﻿@model IEnumerable<FurnitureShop.Areas.Seller.Data.ProductViewModel>
+
+@{
+    ViewBag.Title = "Listings";
+    Layout = "~/Areas/Seller/Views/Shared/_SellerLayout.cshtml";
+}
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+    }
+
+    .header {
+        background-color: #2196F3;
+    }
+
+    .logo {
+        width: 40px;
+        height: 40px;
+    }
+
+    .user-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+    }
+
+    .stat-box {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .breadcrumb-item {
+        color: #2196F3;
+        text-decoration: none;
+    }
+
+        .breadcrumb-item.active {
+            color: #666;
+        }
+
+    .table th, .table td {
+        text-align: center;
+    }
+
+    .btn-seller {
+    }
+
+    .add-listing-button {
+        background-color: #36a536; /* Bootstrap primary color */
+        color: white;
+        padding: 7px 14px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        text-align: center;
+        display: inline-block;
+    }
+
+        .add-listing-button:hover {
+            background-color: #2f932f; /* Darker shade for hover */
+        }
+
+    th {
+        font-weight: lighter;
+    }
+</style>
+
+
+<div class="container-fluid ">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <span>
+                Home
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708" />
+                </svg>
+            </span>
+            <h5>Listing Management</h5>
+        </div>
+
+        <div>
+
+            @Html.ActionLink("ADD NEW LISTING", "Create", "Product", null, new { @class = "add-listing-button" })
+        </div>
+
+    </div>
+    @{
+        var active = 0;
+        var inActive = 0;
+        foreach (var item in Model)
+        {
+            if (item.isActive)
+            {
+                active += 1;
+            }
+            else
+            {
+                inActive += 1;
+            }
+        }
+    }
+
+    <div class="row mb-3">
+        <div class="col-md-2">
+            <div class="stat-box text-center py-1">
+                <span style="display:block">
+                    @active
+                </span> Active Listings
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="stat-box text-center py-1">
+                <span style="display:block">
+                   @inActive
+                </span>
+                Inactive Listings
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-start mb-3">
+        <button class="btn btn-outline-primary mr-2">Bulk Actions</button>
+        <button class="btn btn-outline-primary mr-2">Request Download</button>
+        <button class="btn btn-outline-primary mr-2">Upload</button>
+        <button class="btn btn-outline-primary">History</button>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-2">
+            <label for="category">Category</label>
+            <select id="category" class="form-control">
+                <option>All</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label for="brand">Brand</label>
+            <select id="brand" class="form-control">
+                <option>All</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label for="price-range">Price Range</label>
+            <input type="text" id="price-range" class="form-control">
+        </div>
+        <div class="col-md-2 d-flex align-items-end">
+            <button class="btn btn-outline-primary mr-2">Apply</button>
+            <button class="btn btn-outline-secondary">Reset</button>
+        </div>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Product Details</th>
+                <th scope="col">Listing Price</th>
+                <th scope="col">Final Price</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Category</th>                                
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if (Model.Count() > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td></td>
+                        <td>@item.product_name</td>
+                        <td>@item.list_price</td>
+                        <td>@item.selling_price</td>
+                        <td>@*@item..*@</td>
+                        <td>@item.category_id</td>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="10" class="text-center">No data to display</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#updateIsActiveBtn').click(function () {
+            var productId = $('#productId').val(); 
+            var isActive = $('#isActiveCheckbox').prop('checked'); 
+
+            $.ajax({
+                url: '/Product/UpdateIsActive', 
+                method: 'POST',
+                data: {
+                    productId: productId,
+                    isActive: isActive
+                },
+                success: function (response) {                
+                    console.log('Product isActive updated successfully');
+                },
+                error: function (xhr, status, error) {                    
+                    console.error('Error updating product isActive:', error);
+                }
+            });
+        });
+    });
+
+</script>

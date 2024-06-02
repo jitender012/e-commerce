@@ -1,0 +1,54 @@
+﻿@model FurnitureShop.Areas.Administration.Data.UpdateCategoryViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Administration/Views/Shared/_AdminLayout.cshtml";
+
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm("Edit","ManageCategory",FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Category</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.category_id)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.category_name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.category_name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.category_name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.mainCategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.mainCategoryId, (SelectList)ViewBag.CategoryList,Model.MainCategoryName,  new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.category_id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <img src="@Url.Content(Model.category_img)" style="width:200px; height:200px">
+        <div class="col-md-10">
+            <input type="file" name="ImageFile" class="form-control" id="formFile" />
+            @Html.HiddenFor(model => model.category_img, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.category_img, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

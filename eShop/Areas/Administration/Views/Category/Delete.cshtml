@@ -1,0 +1,41 @@
+﻿@model FurnitureShop.Data.Category
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Administration/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Category</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.category_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.category_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.category_img)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.category_img)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

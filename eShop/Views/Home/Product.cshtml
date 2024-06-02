@@ -1,0 +1,231 @@
+﻿@model FurnitureShop.Areas.Seller.Data.ProductDetailsViewModel
+@{
+    ViewBag.Title = "SingleProductView";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+<style>
+    .img-box {
+        border: 1px solid #f0f0f0;
+        width: 400px;
+        height: 400px
+    }
+
+    .view-body {
+        background-color: #f1f3f6;
+    }
+
+    .content {
+        background-color: white;
+    }
+
+    .imgDiv {
+        display:flex;
+        flex-wrap:wrap;
+        align-content:center;
+        min-height:350px;
+        height: auto;
+        padding: 20px;
+        overflow: hidden;
+        border: 1px solid #dedede;
+    }
+
+    .btnsDiv {
+    }
+    .image {
+        max-width: 100%;
+        height: auto;
+       
+    }
+
+    .p-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 50px;
+        width: 100%;
+        border: none;
+        cursor: pointer;
+        color: white;
+        box-shadow: 0 1px 1px 0px #919191;
+        border-radius: 2px;
+    }
+
+    .p-btn1 {
+        background-color: dodgerblue;
+    }
+
+    .p-btn2 {
+        background-color: #004aff;
+    }
+</style>
+
+@Html.Partial("~/Views/Partial_Views/_NavWithCategories2.cshtml")
+<div class="view-body d-flex justify-content-center">
+
+    <div class="row content" style="width:92%">
+        <div class="col-lg-4 col-md-8 single-right-left ">
+            <div class="grid images_3_of_2">
+                <div class="flexslider ml-1">
+                    <div class="row ">
+                        <div class="col-2 p-0 ">
+                            <div class="controlSlides d-inline-block">
+
+                            </div>
+                        </div>
+                        <div class="col-10 p-1">
+                            @if (Model.url != null)
+                            {
+
+                                <ul class="slides">
+                                    <li data-thumb="@Url.Content(Model.url)">
+                                        <div class="imgDiv ">
+                                            <img src="@Url.Content(Model.url)" class="img-fluid image example"  alt="">
+                                        </div>
+                                    </li>
+                                    <li data-thumb="@Url.Content(Model.url)">
+                                        <div class="imgDiv ">
+                                            <img src="@Url.Content(Model.url)" class="img-fluid p-1 image example2" alt="">
+                                        </div>
+                                    </li>
+                                    <li data-thumb="@Url.Content(Model.url)">
+                                        <div class="imgDiv">
+                                            <img src="@Url.Content(Model.url)" class="img-fluid image example3" alt="">
+                                        </div>
+                                    </li>
+                                </ul>
+                            }
+                        <div class=" p-2 btnsDiv  row">
+                            @if (Model.isInWishlist)
+                            {
+
+
+                                <div class="col  m-1 p-0">
+                                    <button class="p-btn1 p-btn"> GO TO CART</button>
+                                </div>
+                            }
+                            else
+                            {
+                        <div class="col  m-1 p-0">
+                            @Html.ActionLink("ADD TO CART", "AddToCart", "Cart", new { pid = Model.product_id, area = "Customer" }, new { @class = "p-btn1 p-btn" })
+                           
+                        </div>
+                            }
+
+                            <div class="col m-1 p-0">
+                                @Html.ActionLink("BUY NOW", "Checkout", "Checkout", new { pid = Model.product_id, area = "Customer" }, new { @class = "p-btn2 p-btn" })
+                                @*<button class="p-btn2 p-btn">BUY NOW</button>*@
+                            </div>
+                        </div>
+
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-8 single-right-left simpleCart_shelfItem p-3">
+            <h3 class="mb-3">@Model.product_name</h3>
+            <p class="mb-3">
+                <span class="item_price">@Model.list_price</span>
+                <del class="mx-2 font-weight-light">$280.00</del>
+                <label>Free delivery</label>
+            </p>
+            <p>
+                @Model.description
+            </p>
+            <div class="single-infoagile">
+                <ul>
+                    <li class="mb-3">
+                        Cash on Delivery Eligible.
+                    </li>
+                    <li class="mb-3">
+                        Shipping Speed to Delivery.
+                    </li>
+                    <li class="mb-3">
+                        EMIs from $655/month.
+                    </li>
+                    <li class="mb-3">
+                        Bank OfferExtra 5% off* with Axis Bank Buzz Credit CardT&C
+                    </li>
+                </ul>
+            </div>
+            <div class="product-single-w3l">
+                <p class="my-3">
+                    <i class="far fa-hand-point-right mr-2"></i>
+                    <label>1 Year</label>Manufacturer Warranty
+                </p>
+                <ul>
+                    <li class="mb-1">
+                        3 GB RAM | 16 GB ROM | Expandable Upto 256 GB
+                    </li>
+                    <li class="mb-1">
+                        5.5 inch Full HD Display
+                    </li>
+                    <li class="mb-1">
+                        13MP Rear Camera | 8MP Front Camera
+                    </li>
+                    <li class="mb-1">
+                        3300 mAh Battery
+                    </li>
+                    <li class="mb-1">
+                        Exynos 7870 Octa Core 1.6GHz Processor
+                    </li>
+                </ul>
+                <p class="my-sm-4 my-3">
+                    <i class="fas fa-retweet mr-3"></i>Net banking & Credit/ Debit/ ATM card
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<link href="~/Areas/Customer/web/css/flexslider.css" rel="stylesheet" />
+
+<script src="~/Scripts/jQuery plugins/extm.min.js"></script>
+<script src="~/Areas/Customer/web/js/jquery.flexslider.js"></script>
+<!-- flexslider -->
+
+
+<script>
+    $(document).ready(function () {
+        $('.flexslider').flexslider({
+            controlNav: "thumbnails",
+            pauseOnAction: true,
+            controlsContainer: $(".controlSlides"),
+        })
+    });
+
+    //image zomm
+    $(document).ready(function () {
+        $('.example').extm({
+            squareOverlay: true,
+            position: 'right',
+            rightPad: 40,
+            zoomLevel: 3,
+            imageSrc: $(this).attr('src'),
+        });
+        $('.example2').extm({
+            position: 'right',
+            rightPad: 40,
+            zoomLevel: 3,
+            squareOverlay: true,
+
+        });
+        $('.example3').extm({
+            position: 'right',
+            rightPad: 40,
+            zoomLevel: 3,
+            squareOverlay: true,
+
+        });
+    });
+
+    $(document).ready(function () {
+
+
+    });
+</script>

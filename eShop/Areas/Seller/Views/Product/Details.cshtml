@@ -1,0 +1,135 @@
+﻿@model FurnitureShop.Areas.Seller.Data.ProductViewModel
+    @using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Seller/Views/Shared/_SellerLayout.cshtml";
+
+<div>
+    <h4>Product Details </h4>
+    <hr />
+    <div class="row">
+        <label>Quantiy:</label>
+        @if (Model.Stock != null)
+        {@Html.DisplayFor(x => x.Stock.quantity)
+
+    }
+    else
+    {
+        <p>0</p>
+    }
+        <!-- Button trigger modal -->
+        
+    <dl class="row">
+        <div class="col-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.product_id)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.product_id)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.product_name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.product_name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.list_price)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.list_price)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.url)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.url)
+            </dd>
+        </div>
+        <div class="col-6">
+
+
+            <dt>
+                @Html.DisplayNameFor(model => model.main_category_id)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.categoryName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.categoryName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.brandName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.brandName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.created_date)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.created_date)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.modified_date)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.modified_date)
+            </dd>
+        </div>
+
+    </dl>
+        </div>
+</div>
+
+<hr />
+<div class="row">
+    @foreach (var item in Model.AdditionalDetails)
+    {
+        <div class="col-6">
+            <dl>
+                <dt>
+                    @item.AttributeName
+                </dt>
+                <dd>
+                    @item.AttributeValue
+                </dd>
+
+            </dl>
+
+        </div>
+    }
+</div>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.product_id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

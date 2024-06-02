@@ -1,0 +1,84 @@
+﻿@model IEnumerable<FurnitureShop.Areas.Seller.Data.ProductListViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Seller/Views/Shared/_SellerLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.product_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.list_price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.url)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.product_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.list_price)
+            </td>
+            <td>
+                @if (item.url != null)
+                {
+                    <img src="@Url.Content(item.url)" width="150" height="150">
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.product_id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.product_id }) |
+                @using (Html.BeginForm("Delete", "ManageProducts", new { id = item.product_id }, FormMethod.Post, new { onsubmit = "return confirm('Are you sure you want to delete this product?');" }))
+                {
+                    <input type="submit" value="Delete" class="btn btn-link" style="color: red;" />
+                }
+            </td>
+
+
+        </tr>
+    }
+
+
+</table>
+@{var x = Model.Select(x => x.product_name).ToString();}
+<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Delete
+</button>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete @x</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            @Html.BeginForm("Delete", "ManageProducts", FormMethod.Post)
+            {
+            <input type="hidden" name="id" value="" />
+
+            <div class="modal-body">
+                Are you sure?
+            </div>
+            <button type="submit" class="btn btn-danger">Delete</button>
+            }
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>

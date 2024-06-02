@@ -1,0 +1,243 @@
+﻿@model FurnitureShop.Areas.Seller.Data.ProductViewModel
+    @using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Seller/Views/Shared/_SellerLayout.cshtml";
+}
+
+
+
+@using (Html.BeginForm("Create", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Create Product</h4>
+    <hr />
+    <div class="form-horizontal row">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model=>model.user_id, new {value=User.Identity.GetUserId()})
+        @Html.HiddenFor(model => model.product_id, new { htmlAttributes = new { @class = "form-control" } })
+
+        <div class="col ">
+            <div class="form-group">
+                @Html.LabelFor(model => model.product_name, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.product_name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.product_name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.brand_id, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.brand_id, (SelectList)ViewBag.BrandList, "Select Brand", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.brand_id, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.main_category_id, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.main_category_id, (SelectList)ViewBag.MainCategoryList, "Select Main Category", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.main_category_id, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.category_id, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.category_id, new SelectList(" "), "Select Category", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.category_id, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="col ">
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.list_price, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.list_price, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.list_price, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.selling_price, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.selling_price, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.selling_price, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.productImage, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-10">
+                    <input type="file" name="ImageFile" multiple class="form-control" id="formFile" />
+                    @Html.ValidationMessageFor(model => model.productImage, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <hr />
+
+    <h5 class="d-inline">Additional Information</h5>
+    <button type="button" class="float-end  border-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Add More Info+
+    </button>
+
+    <div class=" mt-3 mb-3">
+        <div class="row">
+            <div class="form-group" id="infoContainer">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="">
+            <input type="submit" value="Create" class="btn btn-success btn-block w-100" />
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Custom Field</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label>Field Name</label>
+                <input type="text" name="name" id="attributeName" class="form-control" />
+                <label>Field Value</label>
+                <input type="text" name="name" id="attributeValue" class="form-control" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class=" btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="addProductDetails" class="btn btn-primary">Done</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $('#main_category_id').change(function () {            
+            loadSubCategories();
+        });
+    });
+
+  
+    function loadSubCategories() {
+        var mainCategoryId = $('#main_category_id').val();
+        $.ajax({
+            url: '/Seller/Product/GetCategories',
+            type: 'GET',
+            data: { id: mainCategoryId },
+            success: function (data) {
+                // Populate SubCategory dropdown with fetched data
+                $('#category_id').html('<option value="">Select Category</option>');
+                $.each(data, function (index, item) {
+                    $('#category_id').append('<option value="' + item.category_id + '">' + item.category_name + '</option>');
+                });
+            }
+        });
+    }
+    function removeInfoElement() {
+        var hiddenLabel = document.getElementById("hiddenLabel");
+        var visibleLabel = document.getElementById("visibleLabel");
+        var removeIcon = document.getElementById("removeIcon");
+        var inputBox = document.getElementById("inputBox");
+
+        hiddenLabel.remove();
+        visibleLabel.remove();
+        removeIcon.remove();
+        inputBox.remove();
+    }
+    $(document).ready(function () {
+        $("#attributeName, #attributeValue").keyup(function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                $("#addProductDetails").click();
+            }
+        });
+
+        var i = 0;
+        $("#addProductDetails").click(function () {
+            var attributeName = $("#attributeName").val();
+            var attributeValue = $("#attributeValue").val();
+
+            var newIndex = $(".product-input").length;
+
+
+            var newProductHtml = '<div class="product-input ">' +
+                '<input id="hiddenLabel" type="hidden" name="ProductAttributes[' + i + '].AttributeName" value="' + attributeName + '"/>' +
+
+                '<label class = "control-label" id="visibleLabel">' + attributeName + '</label>' +
+                '<i class="fa fa-minus-circle float-end cursor-pointer" style="color:red"  id="removeIcon' + i + '"></i>' +
+                '<input type="text" class="form-control" id="inputBox" name="ProductAttributes[' + i + '].AttributeValue" value="' + attributeValue + '"/>' +
+                '</div>';
+
+            //var inputContainerDiv = $('<div>').append(newProductHtml)
+            if (attributeName && attributeName != null) {
+
+                $("#infoContainer").append(newProductHtml);
+            }
+            //Clear the input fields after adding the details
+            $("#attributeName").val('');
+            $("#attributeValue").val('');
+
+            // Close the modal after adding details
+            $('#exampleModal').modal('hide');
+
+
+            $("#removeIcon" + i).click(function () {
+                var removedIndex = $(this).parent();
+                $(this).parent().remove();
+
+                var indexx = 0;
+                // Update the remaining divs' indices
+                $(".product-input").each(function () {
+                    var attributeNameInput = $(this).find('input[name*="AttributeName"]');
+                    var attributeValueInput = $(this).find('input[name*="AttributeValue"]');
+                    var attributeIconId = $(this).find('i[id*="removeIcon"]');
+
+                    // Update name attribute
+                    attributeNameInput.attr('name', 'ProductAttributes[' + indexx + '].AttributeName');
+
+                    // Update value attribute
+                    attributeValueInput.attr('name', 'ProductAttributes[' + indexx + '].AttributeValue');
+
+                    // Update button id
+                    attributeIconId.attr('id', 'removeIcon' + indexx + '');
+
+
+                    indexx++;
+                    i = indexx;
+                });
+
+            })
+
+            i++;
+        });
+
+    });
+</script>

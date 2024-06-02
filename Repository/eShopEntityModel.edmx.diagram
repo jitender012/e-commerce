@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="31a66b03d39b48058fc76f6ac789716f" Name="Diagram1" ZoomLevel="81">
+        <EntityTypeShape EntityType="eShopModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="eShopModel.Address" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="eShopModel.AspNetRole" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="eShopModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="eShopModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="20" IsExpanded="true" />
+        <EntityTypeShape EntityType="eShopModel.AspNetUser" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="eShopModel.Banner" Width="1.5" PointX="7.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="eShopModel.Feedback" Width="1.5" PointX="7.5" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="eShopModel.MainCategory" Width="1.5" PointX="0.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="eShopModel.ProductAttribute" Width="1.5" PointX="7.5" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="eShopModel.ProductImage" Width="1.5" PointX="7.5" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="eShopModel.Q_A" Width="1.5" PointX="10.5" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="eShopModel.SmartPhone" Width="1.5" PointX="9.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="eShopModel.UserCart" Width="1.5" PointX="10.5" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="eShopModel.Wishlist" Width="1.5" PointX="10.5" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="eShopModel.Brand" Width="1.5" PointX="3" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="eShopModel.Category" Width="1.5" PointX="3" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="eShopModel.Product" Width="1.5" PointX="5.25" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="eShopModel.Stock" Width="1.5" PointX="7.5" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="eShopModel.OrderItem" Width="1.5" PointX="13.5" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="eShopModel.Order" Width="1.5" PointX="11.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="eShopModel.Store" Width="1.5" PointX="5.25" PointY="6" IsExpanded="true" />
+        <AssociationConnector Association="eShopModel.FK_Address_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="eShopModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="eShopModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="eShopModel.FK_feedback_users" ManuallyRouted="false" />
+        <AssociationConnector Association="eShopModel.FK_Orders_AspNetUsers_customer" ManuallyRouted="false" />
+        <AssociationConnector Association="eShopModel.FK_Products_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="eShopModel.FK_query_users" ManuallyRouted="false" />
+        <AssociationConnector Association="eShopModel.FK_Stores_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="eShopModel.FK_Table_1_customers_uid" ManuallyRouted="false" />
+        <AssociationConnector Association="eShopModel.FK_wishlist_users" ManuallyRouted="false" />
+        <AssociationConnector Association="eShopModel.FK_feedback_products" ManuallyRouted="false" />
+        <AssociationConnector Association="eShopModel.FK_Categories_MainCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="eShopModel.FK_Products_MainCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="eShopModel.FK_ProductAttributes_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="eShopModel.FK_ProductImages_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="eShopModel.FK_query_products" ManuallyRouted="false" />
+        <AssociationConnector Association="eShopModel.FK_Table_1_products_pid" ManuallyRouted="false" />
+        <AssociationConnector Association="eShopModel.FK_wishlist_products" ManuallyRouted="false" />
+        <AssociationConnector Association="eShopModel.FK__products__brand___3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="eShopModel.FK__products__catego__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="eShopModel.FK__order_ite__produ__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="eShopModel.FK__stocks__product___52593CB8" ManuallyRouted="false" />
+        <AssociationConnector Association="eShopModel.FK__stocks__store_id__5165187F" ManuallyRouted="false" />
+        <AssociationConnector Association="eShopModel.FK_OrderItems_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="eShopModel.AspNetUserRoles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,97 @@
+﻿@using FurnitureShop.Models
+@model LoginViewModel
+@{
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+
+<body>
+    @if (!string.IsNullOrEmpty(ViewBag.Message))
+    {
+        <div class="alert alert-info" role="alert">
+            @ViewBag.Message
+        </div>
+    }
+
+    <div class="row">
+
+
+        <div class="col-3"></div>
+        <div class="col-12 col-md-8 col-lg-6 auth-main-col align-items-center text-center p-5">
+            <div class="d-flex flex-column align-items-center justify-content card  p-5">
+                <div class="w-100 mx-auto">
+
+                    @*<div class=" mb-4">
+                            <a class="app-logo" href="index.html"><img class="h-25 w-25 me-2" src="~/portal-theme-bs5-v3.0/assets/images/app-logo.svg" alt="logo"></a>
+                        </div>*@
+                    <h2 class="auth-heading text-center mb-5">Log in</h2>
+                    <div class="p-3">
+
+                        <section id="">
+                            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <hr />
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <div class="mb-3">
+
+
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control ", @placeholder = "Email address" })
+                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+
+                                </div>
+                                <div class="password mb-3">
+
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+
+                                </div>
+
+                                <div class="d-flex justify-content-between">
+
+                                    <div style="font-size:13px">
+                                        @Html.CheckBoxFor(m => m.RememberMe, new { @class = "" })
+                                        @Html.LabelFor(m => m.RememberMe, new { @class = "form-check-label" })
+                                    </div>
+
+
+
+                                    <div class="forgot-password  text-end" style="font-size:13px">
+                                        <a href="@Url.Action("ForgotPassword","Account")">Forgot password?</a>
+                                    </div>
+
+                                </div>
+
+                                <div class="my-3">
+                                    <div class="text-center">
+                                        <input type="submit" value="Log in" class="btn btn-lg btn-primary btn-block" />
+                                    </div>
+                                </div>
+                                <div class="auth-option text-center pt-5">
+                                    @Html.ActionLink("Register as a new user", "Register")
+                                </div>
+
+                            }
+                        </section>
+
+                        @* <div class="auth-option text-center pt-5">No Account? Sign up <a class="text-link" href="signup.html">here</a>.</div>*@
+                    </div><!--//auth-form-container-->
+
+                </div><!--//auth-body-->
+
+
+            </div><!--//flex-column-->
+        </div><!--//auth-main-col-->
+
+        <div class="col-3"></div>
+
+    </div><!--//row-->
+
+</body>
+
+
+
+
+
+

@@ -1,0 +1,285 @@
+﻿@model FurnitureShop.Areas.Customer.Data.UserAddressViewModel
+
+
+<style>
+    .ucd11 {
+        padding-bottom: 13px;
+    }
+
+    .ucd12 {
+        color: #ff7769;
+        border: 1px solid #ebebeb;
+        padding: 12px;
+        padding-left: 25px;
+        font-size: 15px;
+        margin-bottom: 15px;
+        cursor: pointer;
+    }
+
+    .u1cd12 {
+        border: 1px solid #ebebeb;
+        padding: 14px;
+        font-size: 12px;
+        margin-bottom: 15px;
+    }
+
+    #formDiv {
+        background-color: #fffbfa;
+        padding: 10px;
+        border: .1px solid #ede6e6;
+    }
+
+    .c-badge {
+        background-color: gray;
+        color: white;
+        border-radius: 3px;
+        padding: 0px 4px;
+    }
+
+    .txtBox {
+        padding: 7px;
+        margin: 10px;
+        border-style: solid;
+        border-color: #ebebeb;
+    }
+
+    .txtArea {
+        width: 674px;
+        border: 1px groove #cdcdcd;
+        height: 70px;
+    }
+
+    #edit-address {
+        padding: 3px;
+        cursor: pointer;
+        padding-right: 3px;
+        padding-left: 3px;
+    }
+
+
+
+    ._1UHYca {
+        z-index: 1;
+        white-space: nowrap;
+        display: none;
+        position: absolute;
+        font-size: 14px;
+        color: #878787;
+        border: 1px solid rgba(0, 0, 0, .05);
+        box-shadow: 0 6px 6px 0 rgba(0,0,0,.12), 0 1px 3px 0 rgba(0,0,0,.18);
+        right: 23px;
+        padding: 5px;
+        border-radius: 3px;
+        top: 10px;
+    }
+
+    ._3E8aIl {
+        background-color: #fff;
+        border-radius: 2px;
+        box-shadow: 0 2px 4px 0 rgba(0,0,0,.08);
+    }
+
+    .full-address {
+        font-size: 14px;
+    }
+
+    .dropbtn {
+        padding: 0px 5px;
+        background-color: white;
+        font-size: 16px;
+        border: none;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 80px;
+        box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content span {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content span:hover {
+        background-color: #ddd;
+        cursor: pointer;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+        cursor: pointer;
+    }
+</style>
+<div class="card p-4 m-2">
+    <div class="ucd11">
+        Manage Addresses
+    </div>
+    <div class="ucd12" id="addAddress">
+        + ADD NEW ADDRESS
+    </div>
+
+
+    <div style="display:none" id="formDiv" class="mb-3 p-4">
+        ADD NEW ADDRESS
+        @using (Ajax.BeginForm("AddAddress", "Profile", null, new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnSuccess = "succesfullyAdded",
+            OnFailure = "FailMessage",
+            UpdateTargetId = "address"
+        }, new { id = "MyNewNameId" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                @Html.EditorFor(x => x.Name, new { htmlAttributes = new { @class = "txtBox", placeholder = "Name", required = "true" } })
+                @Html.TextBoxFor(x => x.PhoneNumber, new { @class = "txtBox", type = "number", placeholder = "Phone Number", required = "true" })
+                @Html.TextBoxFor(x => x.AlternatePhoneNumber, new { @class = "txtBox", type = "number", placeholder = "Alternate Moblie(Optional)" })
+            </div>
+            <div class="row">
+                @Html.TextAreaFor(x => x.Address1, new { @class = "txtArea txtBox", required = "true" })
+
+            </div>
+            <div class="row">
+                @Html.TextBoxFor(x => x.PinCode, new { @class = "txtBox", placeholder = "Pin Code", required = "true", type = "number" })
+                @Html.EditorFor(x => x.State, new { htmlAttributes = new { @class = "txtBox", placeholder = "State", required = "true" } })
+                @Html.EditorFor(x => x.City, new { htmlAttributes = new { @class = "txtBox", placeholder = "City", required = "true" } })
+
+            </div>
+            <div class="row">
+                <div class="me-2">
+
+                    @Html.EditorFor(x => x.LandMark, new { htmlAttributes = new { @class = "txtBox", placeholder = "Land Mark(Optional)" } })
+                </div>
+                <div class="d-flex align-content-center flex-wrap">
+                    <label class="ml-3 mr-3 ">
+                        Address Type
+                    </label>
+                    <label class="mr-3">
+                        @Html.RadioButtonFor(x => x.AddressType, "Home", new { required = "required" })
+                        Home
+                    </label>
+                    <label>
+                        @Html.RadioButtonFor(x => x.AddressType, "Work")
+                        Work
+                    </label>
+                </div>
+
+            </div>
+            <div>
+                <input type="submit" value="Add" class="btn  btn-danger w-25 btn-block" />
+                <input type="button" id="cancel" value="Cancel" class="btn btn-secondary w-25 btn-block" />
+
+            </div>
+
+        }
+
+    </div>
+    <div id="addressContainer">
+
+
+    </div>
+
+
+</div>
+
+<script>
+
+
+    function loadAddress() {
+    $.ajax({
+        url: '@Url.Action("GetAddresses", "Profile")',
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            $('#addressContainer').empty();
+            $.each(data, function(index, item) {
+                var addressHtml = '<div class="u1cd12" id="address' + item.Id + '">';
+                addressHtml += '<div class="w-100 d-inline-block">';
+                addressHtml += '<label class="c-badge float-left">' + item.AddressType + '</label>';
+                addressHtml += '<div class="dropdown float-right">';
+                addressHtml += '<button class="dropbtn">';
+                addressHtml += '<i class="fa fa-ellipsis-v float-right" id="edit-address-' + index + '"></i>';
+                addressHtml += '</button>';
+                addressHtml += '<div class="dropdown-content">';
+                addressHtml += '<span>Edit</span>';
+                addressHtml += '<span onclick="deleteAddress(' + item.Id + ')" >Delete</span>';
+                addressHtml += '</div>';
+                addressHtml += '</div>';
+                addressHtml += '</div>';
+                addressHtml += '<div class="full-address">';
+                addressHtml += '<div>';
+                addressHtml += '<label class="mr-2"><b>' + item.Name + '</b></label><label> <b>' + item.PhoneNumber + '</b></label>';
+                addressHtml += '</div>';
+                addressHtml += '<div class="w-75">';
+                addressHtml += item.Address1 + ', ' + item.City + ', ' + item.PinCode + ', ' + item.State;
+                addressHtml += '</div>';
+                addressHtml += '</div>';
+                addressHtml += '</div>';
+
+                $('#addressContainer').append(addressHtml);
+            });
+        },
+        error: function(xhr, textStatus, errorThrown) {
+            console.log('Error:', errorThrown);
+        }
+    });
+}
+
+
+
+    var addAddress = document.getElementById("addAddress");
+    addAddress.addEventListener("click", function () {
+        document.getElementById("formDiv").style.display = "block";
+        addAddress.style.display = "none";
+    })
+
+    var cancelAddAddress = document.getElementById("cancel");
+    cancelAddAddress.addEventListener("click", function () {
+        document.getElementById("formDiv").style.display = "none";
+        addAddress.style.display = "block"
+    })
+
+    $(document).ready(function () {
+        loadAddress();
+        $("#edit-address").addEventListener("click", function () {
+        })
+    });
+
+    function succesfullyAdded() {
+        document.getElementById("formDiv").style.display = "none";
+        addAddress.style.display = "block"
+        loadAddress();
+    }
+
+    function deleteAddress(Id) {
+        if (confirm("Are you sure you want to delete this address?")) {
+            $.ajax({
+                url: '@Url.Action("DeleteAddress","Profile", new {area="Customer"})',
+                type: 'POST',
+                data: { Id: Id },
+                success: function () {
+                    //document.getElementById("address" + Id).remove();
+                    loadAddress();
+                },
+                error: function () {
+                    console.error('Error deleting address:', error);
+                }
+            });
+        }
+    }
+
+</script>

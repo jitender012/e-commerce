@@ -1,0 +1,77 @@
+﻿@model FurnitureShop.Models.RegisterViewModel
+@{
+    ViewBag.Title = "RegisterSeller";
+}
+@{
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+
+<body>
+
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-12 col-md-8 col-lg-6 auth-main-col align-items-center text-center p-5">
+            <div class="d-flex flex-column align-items-center justify-content card  p-5">
+                <div class="w-100 mx-auto">
+
+                    <div class=" mb-4">                        
+                        <a class="app-logo" href=""><img  height="50" width="135" src="~/Images/Utilities/logo.png" alt="logo"></a>
+                    </div>
+
+                    <div class="p-3">
+
+                        <section id="">
+                    <h4 class="text-start mb-5">Create a new account.</h4>
+                            @using (Html.BeginForm("RegisterSeller", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <hr />
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <div class="mb-3">
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control ", @placeholder = "Email address" })
+                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+
+                                </div>
+                                <div class="password mb-3">
+
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+
+                                </div>
+                                <div class="password mb-3">
+                                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirm Password" })
+                                </div>
+
+
+                                <div class="my-3">
+                                    <div class="text-center">
+                                        <input type="submit" value="Register" class="btn btn-lg  btn btn-dark btn-block" />
+                                    </div>
+                                </div>
+                                <div class="auth-option text-center pt-5">
+                                    @Html.ActionLink("Already Registered? Login here", "Login")
+                                </div>
+
+
+                            }
+                            <div class="auth-option text-center pt-5">
+                                @Html.ActionLink("Register as a Customer", "Register", "Account", null, new { @class = "btn btn-primary" })
+                            </div>
+                        </section>
+
+                    </div><!--//auth-form-container-->
+
+                </div><!--//auth-body-->
+
+
+            </div><!--//flex-column-->
+        </div><!--//auth-main-col-->
+
+        <div class="col-3"></div>
+
+    </div><!--//row-->
+
+</body>
+

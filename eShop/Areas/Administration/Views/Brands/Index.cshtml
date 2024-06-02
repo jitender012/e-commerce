@@ -1,0 +1,61 @@
+﻿@model IEnumerable<FurnitureShop.Areas.Administration.Data.BrandsViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Administration/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table id="dataTable" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Image
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.brand_name)
+            </td>
+            <td>
+
+                @if (item.brand_img != null)
+                {
+                    <img src="@Url.Content(item.brand_img)" alt="@item.brand_img" width="150" height="150" />
+                }
+                else
+                {
+                    <span>No Image</span>
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.brand_id }, new { target = "_blank" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.brand_id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.brand_id })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+<script>
+
+</script>
+
+

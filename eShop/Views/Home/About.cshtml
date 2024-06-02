@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+<main aria-labelledby="title">
+    <h2 id="title">@ViewBag.Title.</h2>
+    <h3>@ViewBag.Message</h3>
+
+    <p>Use this area to provide additional information.</p>
+    <input type="button" name="name" onclick="BtnClick()" value="ClickMe" />
+</main>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<script>
+    function BtnClick() {
+      
+        $.ajax({
+            URL: "/Home/GetCategories",
+            method: "GET",
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (err) {
+                console.error(err);
+            }
+        })
+    }
+</script>

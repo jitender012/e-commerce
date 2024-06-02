@@ -1,0 +1,56 @@
+﻿@model FurnitureShop.Areas.Administration.Data.BrandsViewModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Administration/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>BrandsViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.brand_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.brand_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.brand_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.brand_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.brand_img)
+        </dt>
+        
+        <dd>
+            @if (Model.brand_img != null)
+            {
+                <img src="@Url.Content(Model.brand_img)" alt="@Model.brand_img" width="150" height="150" />
+            }
+            else
+            {
+                <span>No Image</span>
+            }
+        </dd>
+
+
+        <dd>
+            @Html.DisplayFor(model => model.brand_img)
+        </dd>
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new {id = Model.brand_id}) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,192 @@
+﻿@model FurnitureShop.Areas.Customer.Data.UserDetails
+@{
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+<style>
+    body {
+        font-family: Roboto, Arial, sans-serif;
+        min-width: 1200px;
+        overflow: auto;
+    }
+
+    .parent {
+        background-color: #f1f3f6;
+    }
+
+    .card {
+        box-shadow: 0px 0px 3px #d6d6d6;
+        border-radius: 1px;
+    }
+
+    .NS64GK {
+        font-size: 14px;
+        padding: 12px 5px 12px 66px;
+        cursor: pointer;
+    }
+
+    ._15sjxS {
+        padding: 10px 7px 9px 20px;
+        display: flex;
+        align-items: center; /* Center vertically */
+    }
+
+    .fa {
+        margin-right: 5px; /* Add some space between the icon and text */
+    }
+
+    ._3GARO3 {
+        width: 20px;
+        height: 20px;
+    }
+
+    a, img {
+        text-decoration: none;
+        color: inherit;
+        border: none;
+        outline: none;
+    }
+
+    ._3vaeIJ {
+        margin-left: 8px;
+        font-size: 16px;
+        font-weight: 500;
+        color: #878787;
+    }
+
+    i {
+        color: dimgrey;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    .acdi211 {
+        padding: 12px;
+        margin: 10px
+    }
+</style>
+<div class="parent">
+    <div class="container-fluid mx-3">
+        <div class="row parent">
+            <div class="col-3 mt-2">
+                <div class="card m-2 px-5 py-1  shadow-lg">
+                    <p>Hello,</p>
+                    <h5>User</h5>
+                </div>
+                <div class="card m-2 p-2 rounded-0 shadow-lg">
+                    <div>
+                        <div class="_15sjxS">
+                            <i class="fa fa-user fa-lg"></i>
+                            <div class="_3vaeIJ">
+                                Account Settings
+                            </div>
+                        </div>
+
+                        <div>
+                            <a>
+                                <div class="NS64GK">
+                                    @Ajax.ActionLink("Profile Information", "AccountDetails", new AjaxOptions
+                                    {
+                                        HttpMethod = "GET",
+                                        UpdateTargetId = "targetResult",
+                                        InsertionMode = InsertionMode.Replace
+
+                                    })
+                                </div>
+                            </a>
+                            <a>
+                                <div class="NS64GK">
+                                    @Ajax.ActionLink("Manage Addresses", "ManageAddress", new AjaxOptions
+                               {
+                                   HttpMethod = "GET",
+                                   UpdateTargetId = "targetResult",
+                                   InsertionMode = InsertionMode.Replace,
+                                   LoadingElementId = "loadingImage"
+                               })
+                                </div>
+                            </a>
+                        </div>
+                        <hr />
+                    </div>
+                    <div>
+                        <div class="_15sjxS">
+                            <i class="fa  fa-list-alt" style="color:black"></i>
+                            <div class="_3vaeIJ">
+                                My Orders
+                            </div>
+                        </div>
+
+
+                        <hr />
+                    </div>
+                </div>
+            </div>
+            <div id="loadingDiv" class="d-none" style="height:200px;width:200px">
+                <img src="~/Images/Utilities/icons8-loading-infinity.gif" alt="Loading..." />
+            </div>
+            <div class="col-8 m-2 mt-2 ">
+
+                <div id="loadingImage" style="display: none;">
+                    <img src="~/Images/Utilities/icons8-loading-infinity.gif" alt="Loading..." />
+                </div>
+
+                <div id="targetResult" class="">
+
+                    <div class="card p-4 m-2">
+                        <div class="">
+                            Personal Information
+                        </div>
+                        <div class="row mb-4">
+                            <input type="text" class="acdi211" name="name" value="@Model.UserName" disabled />
+                            <input type="text" class="acdi211" name="name" value="@Model.Email" disabled />
+                            <input type="text" class="acdi211" name="name" placeholder="phone" value="@Model.Mobile" disabled />
+                        </div>
+
+
+                        <div class="">
+                            Email Address
+                        </div>
+                        <div class="row mb-4">
+                            <input type="text" class="acdi211" name="name" value="@Model.Email" disabled />
+                        </div>
+
+
+                        <div class="">
+                            Mobile Number
+                        </div>
+                        <div class="row mb-4">
+
+                            <input type="text" class="acdi211" name="name" placeholder="Mobile Number" value="@Model.Mobile" disabled />
+
+                        </div>
+                       
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Perform the Ajax request to load the account details when the page loads
+        $.ajax({
+            url: '@Url.Action("AccountDetails", "Profile")',
+            type: 'GET',
+            success: function (result) {
+                $('#targetResult').html(result);
+            },
+            error: function () {
+                // Handle errors if any
+            }
+        });
+    });
+    function showLoading() {
+        $('#loadingDiv').show(); // Show the loading element
+    }
+</script>

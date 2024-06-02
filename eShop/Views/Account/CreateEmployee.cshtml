@@ -1,0 +1,71 @@
+﻿
+
+
+    @model FurnitureShop.Models.RegisterViewModel
+    @{
+        ViewBag.Title = "Create Employee";  
+        Layout = "~/Areas/Administration/Views/Shared/_AdminLayout.cshtml";
+    }
+
+
+    <body>
+
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-12 col-md-8 col-lg-6 auth-main-col align-items-center text-center p-5">
+                <div class="d-flex flex-column align-items-center justify-content   p-5">
+                    <div class="w-100 mx-auto">
+
+                        <div class=" mb-4">
+                            <a class="app-logo" href=""><img class="h-25 w-25 me-2" src="~/portal-theme-bs5-v3.0/assets/images/app-logo.svg" alt="logo"></a>
+                        </div>
+                        <h4 class="text-center mb-5">Create Employee</h4>
+
+                        <div class="p-3">
+
+                            <section id="">
+                                @using (Html.BeginForm("CreateEmployee", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+                                {
+                                    @Html.AntiForgeryToken()
+
+                                    <hr />
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <div class="mb-3">
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control ", @placeholder = "Email address" })
+                                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+
+                                    </div>
+                                    <div class="password mb-3">
+
+                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+                                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+
+                                    </div>
+                                    <div class="password mb-3">
+                                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirm Password" })
+                                    </div>
+
+
+                                    <div class="my-3">
+                                        <div class="text-center">
+                                            <input type="submit" value="Create" class="btn btn-lg btn-primary btn-block" />
+                                        </div>
+                                    </div>
+                                   
+                                }                               
+                            </section>
+
+                        </div><!--//auth-form-container-->
+
+                    </div><!--//auth-body-->
+
+
+                </div><!--//flex-column-->
+            </div><!--//auth-main-col-->
+
+            <div class="col-3"></div>
+
+        </div><!--//row-->
+
+    </body>
+

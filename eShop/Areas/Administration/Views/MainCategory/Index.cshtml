@@ -1,0 +1,63 @@
+﻿@model IEnumerable<FurnitureShop.Areas.Administration.Data.MainCategoryViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Administration/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="m-2">
+    <h4 style="color:forestgreen">@ViewBag.IsSuccess</h4>
+    <div class="d-inline-flex">
+        <h2>Main Category</h2>
+    </div>
+    <div class="float-end me-2">
+        <a href="@Url.Action("Create", "ManageMainCategory")">
+            Add
+            <i class="fa fa-plus"></i>
+        </a>
+    </div>
+    <table class="table-hover table" id="dataTable">
+        <thead>
+
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Image
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="align-middle">
+                        <div>
+                            @Html.DisplayFor(modelItem => item.MainCategoryName)
+                        </div>
+                    </td>
+                    <td>
+                        @if (item.MainCategoryImage != null)
+                        {
+                            <img src="@Url.Content(@item.MainCategoryImage)" alt="@item.MainCategoryImage" width="150" height="150" />
+                        }
+                        else
+
+                        {                            
+                            <img src="@Url.Content("~/Images/Utilities/No-Image-Placeholder.svg.png")"  width="150" height="150" alt="Alternate Text" />
+                        }
+                    </td>
+                    <td class="align-middle">
+                        <div class="text-center ">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.MainCategoryId }, new { @class = "mx-2 btn btn-outline-success mb-sm-1" })
+                            @Html.ActionLink("Details", "Details", new { id = item.MainCategoryId }, new { @class = "mx-2 btn btn-outline-secondary mb-sm-1" })
+                            @Html.ActionLink("Delete", "Delete", new { id = item.MainCategoryId }, new { @class = "mx-2 btn btn-outline-danger mb-sm-1" })
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
