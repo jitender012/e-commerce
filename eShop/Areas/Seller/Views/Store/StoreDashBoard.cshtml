@@ -25,14 +25,14 @@
         margin-bottom: 20px;
     }
 
-        .breadcrumb a {
-            text-decoration: none;
-            color: #007bff;
-        }
+    .breadcrumb a {
+        text-decoration: none;
+        color: #007bff;
+    }
 
-            .breadcrumb a:hover {
-                text-decoration: underline;
-            }
+    .breadcrumb a:hover {
+        text-decoration: underline;
+    }
 
     h1 {
         font-size: 24px;
@@ -55,56 +55,56 @@
         border: 1px solid rgba(0, 0, 0, 0.1);
     }
 
-        .summary-item:last-child {
-            margin-right: 0;
-        }
+    .summary-item:last-child {
+        margin-right: 0;
+    }
 
-        .summary-item span {
-            display: block;
-            font-size: 18px;
-            font-weight: bold;
-        }
+    .summary-item span {
+        display: block;
+        font-size: 18px;
+        font-weight: bold;
+    }
 
     .actions {
         margin-bottom: 20px;
     }
 
-        .actions button {
-            padding: 10px 20px;
-            margin-right: 10px;
-            border: none;
-            background-color: #007bff;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+    .actions button {
+        padding: 10px 20px;
+        margin-right: 10px;
+        border: none;
+        background-color: #007bff;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+    }
 
-            .actions button:hover {
-                background-color: #0056b3;
-            }
+    .actions button:hover {
+        background-color: #0056b3;
+    }
 
     .filters {
         display: flex;
         margin-bottom: 20px;
     }
 
-        .filters select,
-        .filters button {
-            padding: 10px;
-            margin-right: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
+    .filters select,
+    .filters button {
+        padding: 10px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
 
-        .filters button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-        }
+    .filters button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+    }
 
-            .filters button:hover {
-                background-color: #0056b3;
-            }
+    .filters button:hover {
+        background-color: #0056b3;
+    }
 
     .inventory-table {
         border-collapse: collapse;
@@ -131,11 +131,11 @@
         align-items: center;
     }
 
-        .product-info img {
-            width: 50px;
-            height: 50px;
-            margin-right: 10px;
-        }
+    .product-info img {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+    }
 
     .table-header > div,
     .table-row > div {
@@ -161,16 +161,16 @@
                 </div>
 
                 <div>
-
                     <input type="text" readonly value="@Model.store_name" class="form-control"/>
+                    <input type="hidden" id="store-id" readonly value="@Model.store_id" class="form-control"/>
                 </div>
 
             </div>
             <div class="summary">
-                <div class="summary-item">All Inventory <span>5276 SKUs</span></div>
-                <div class="summary-item">Low Stock <span>6 SKUs</span></div>
-                <div class="summary-item">Out of Stock <span>198 SKUs</span></div>
-                <div class="summary-item">Recommendations <span>1 SKUs</span></div>
+                <div class="summary-item">All Inventory <span id="allInventory"></span></div>
+                <div class="summary-item">Low Stock <span id="lowInventory"></span></div>
+                <div class="summary-item">Out of Stock <span id="finishedInventory"></span></div>
+                <div class="summary-item">Recommendations <span id="all-inventory">1</span></div>
             </div>
             <div class="actions">
                 <button>Bulk Stock Update</button>
@@ -212,3 +212,42 @@
 
 
 </div><!--//app-wrapper-->
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: '@Url.Action("GetStockInStore", "Store")',
+            type: 'POST',
+            dataType: "json",
+            data: storeId,
+            success: function (data) {
+                displayStockLevel(data);
+                loadProducts(data);
+            },
+            error: function () {
+                console.error('Error occurred while loading products.');
+            }
+        });
+    })
+
+    function displayStockLevel(data) {
+        var allinventory = 0;
+        var lowinventory = 0;
+        var finishedinventory = 0;
+
+        data.forEach(function (item) {
+            allinventory++; 
+           
+            if (item.quantity === 0) {
+                finishedinventory++; 
+            } else if (item.quantity <= 10) { 
+                lowinventory++; 
+            }
+        });
+
+       
+        $('#allInventory').text(allinventory);
+        $('#lowInventory').text(lowinventory);
+        $('#finishedInventory').text(finishedinventory);
+    }
+</script>

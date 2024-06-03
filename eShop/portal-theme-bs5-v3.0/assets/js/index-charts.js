@@ -211,14 +211,14 @@ var barChartConfig = {
 
 
 // Generate charts on load
-window.addEventListener('load', function(){
+//window.addEventListener('load', function(){
 	
-	var lineChart = document.getElementById('canvas-linechart').getContext('2d');
-	window.myLine = new Chart(lineChart, lineChartConfig);
+//	var lineChart = document.getElementById('canvas-linechart').getContext('2d');
+//	window.myLine = new Chart(lineChart, lineChartConfig);
 	
-	var barChart = document.getElementById('canvas-barchart').getContext('2d');
-	window.myBar = new Chart(barChart, barChartConfig);
+//	var barChart = document.getElementById('canvas-barchart').getContext('2d');
+//	window.myBar = new Chart(barChart, barChartConfig);
 	
 
-});	
+//});	
 	

@@ -94,7 +94,7 @@
         </div>
 
     </div>
-    
+
     <div class="row mb-3">
         <div class="col-md-2">
             <div class="stat-box text-center py-1">
@@ -112,9 +112,6 @@
                 Inactive Listings
             </div>
         </div>
-
-
-
     </div>
 
 
@@ -164,7 +161,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Craete Inventory</h1>
+                <h1 class="modal-title fs-5 h1-label" id="exampleModalLabel"></h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="m-body">
@@ -178,7 +175,6 @@
                             </tr>
                         </thead>
                         <tbody id="abcid">
-                            
                         </tbody>
                     </table>
                 </div>
@@ -192,22 +188,19 @@
 </div>
 
 <script>
-    $(document).ready(function () {
-        loadProducts();
 
-    });
+    $(document).ready(loadProducts);
 
     function loadProducts() {
-    // Clear existing tbody content
     $('#productTable tbody').empty();
 
     $.ajax({
         url: "@Url.Action("GetProductStatus","Product")",
         type: "GET",
         dataType: "json",
-        success:
-            function (data) {
-            if (data.length > 0) {
+        success: function (data) {
+            if (data.length) {
+
                 data.forEach(function (product) {
                     var tr = $('<tr>');
 
@@ -251,7 +244,6 @@
                 });
             }
             else {
-                // If no data, display a message in a single table row with colspan
                 $('#productTable tbody').append('<tr><td colspan="7" class="text-center">No data to display</td></tr>');
             }
         },
@@ -260,6 +252,8 @@
         }
         });
     }
+
+
     function loadProductstatus(data) {
         let activeProducts = 0;
         let inActiveProducts = 0;
@@ -274,6 +268,7 @@
         $('#activeProducts').text(activeProducts);
         $('#inActiveProducts').text(inActiveProducts);
     }
+
     function isActiveSwitch(pId, isActive) {
         $.ajax({
             url: '@Url.Action("UpdateProductStatus","Product")',
@@ -288,8 +283,11 @@
             }
         });
     }
+
+
     function addToInventory(pId) {
     $('#abcid').empty();
+
     $.ajax({
         url: '@Url.Action("AddToInventory", "Stock")',
         type: 'GET',
@@ -297,17 +295,36 @@
         data: { 'pId': pId },
         success: function (data) {
             if (data.length > 0) {
-                data.forEach(function (storeStock) {
+                
+                console.log(data);
+                $('.h1-label').text("Update Inventory for ");
+                data.forEach(function (storeStock,index) {
                     var tr = $('<tr>');
 
                     tr.append('<td>' + storeStock.store_name + '</td>');
-                    /*tr.append('<td>' + storeStock.qty + '</td>');*/
-                    tr.append('<input type="text" class="form-control" value="' + storeStock.qty +'"/>');
-                    tr.append('<td><button class="btn">' + 'Update' + '</button></td>').on("click", function () { addStock(storeStock.storeId, pId, storeStock.qty) });
+                    if (storeStock.qty < 0) {
 
-                    // Append the row to the tbody
+                        tr.append('<input type="number" class="form-control" value="' + '-' + '"/>');
+                    }
+                    else {
+                        tr.append('<input type="number" id="qtyValue'+index+'" class="form-control" style="width:100px; margin:5px 0px 0px 20px" value="' + storeStock.qty + '"/>');
+                    }
+                    
+                    var newQty = parseInt($('#qtyValue' + index).val(), 10);
+                  
+                    tr.append('<td><button class="btn" onclick="addStock(' + storeStock.store_id + ', ' + pId + ', ' + newQty + ')">Update</button></td>');
+
+
                     $('#abcid').append(tr);
                 });
+                function getNewQty(index) {
+                    var newQty = parseInt($('#qtyValue' + index).val(), 10);
+                    if (isNaN(newQty)) {
+                        console.error('Invalid quantity value');
+                        return 0; 
+                    }
+                    return newQty;
+                }
             } else {
                 // If no data, display a message in a single table row with colspan
                 $('#productTable tbody').append('<tr><td colspan="3" class="text-center">No data to display</td></tr>');
@@ -315,18 +332,32 @@
         },
         error: function () {
             console.error('Error occurred while loading product status.');
-        },
-        loading:
+        }
+
     });
 
-        function addStock(storeId, productId, qty) {
-                 $.ajax({
-                 url: '@Url.Action("AddToInventory", "Stock")',
-                 type: 'GET',
-                 dataType: "json",
-                     data: "data" : { 'pId': pId },
-                 success: function (obj) { }
+
+    }
+
+    function addStock(storeId, productId, qty) {
+    $.ajax({
+        url: '@Url.Action("AddStock", "Stock")',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            store_id: storeId,
+            product_id: productId,
+            quantity: qty
+        },
+        success: function (obj) {
+
+        },
+        error: function (err) {
+
+            console.error('Error occurred:', err);
         }
+    });
 }
+
 
 </script>
