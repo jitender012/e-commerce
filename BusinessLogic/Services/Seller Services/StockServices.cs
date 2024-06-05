@@ -43,9 +43,10 @@ namespace eShop.Business.Services.Seller_Service
             return mapper.Map<List<StockDomainModel>>(stockRepository.GetAll(x => x.store_id == storeId));
         }
 
-        public void UpdateStock(Stock stock)
-        {            
+        public bool UpdateStock(Stock stock)
+        {                
             stockRepository.Update(stock);
+            return true;
         }
     }
 }

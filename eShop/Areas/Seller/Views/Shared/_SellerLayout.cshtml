@@ -382,10 +382,10 @@
             @RenderBody()
         </div><!--//app-content-->
 
-        <footer class="app-footer">
+        @*<footer class="app-footer">
             <div class="container text-center py-3">
             </div>
-        </footer><!--//app-footer-->
+        </footer>*@<!--//app-footer-->
     </div><!--//app-wrapper-->
     <!-- Javascript -->
     <script src="~/portal-theme-bs5-v3.0/assets/plugins/popper.min.js"></script>
@@ -426,7 +426,7 @@
                         $.each(data, function (index, store) {
                             var $listItem = $('<li>', { class: 'submenu-item' });
                             var $link = $('<a>', {
-                                href: '@Url.Action("StoreDashBoard", "Store")' + '?storeId=' + store.store_id,
+                                href: '@Url.Action("StoreDashBoard", "Home")' + '?storeId=' + store.store_id,
                                 text: store.store_name,
                                 class: 'submenu-link'
                             });

@@ -1,0 +1,345 @@
+﻿@model FurnitureShop.Areas.Seller.Data.StoreViewModel
+
+@{
+    ViewBag.Title = "StoreDashBoard";
+    Layout = "~/Areas/Seller/Views/Shared/_SellerLayout.cshtml";
+}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f5f5;
+    }
+
+    .container {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .breadcrumb {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+        .breadcrumb a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+            .breadcrumb a:hover {
+                text-decoration: underline;
+            }
+
+    h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .summary {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .summary-item {
+        background-color: white;
+        padding: 10px;
+        text-align: center;
+        flex: 1;
+        margin-right: 10px;
+        border-radius: 5px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+        .summary-item:last-child {
+            margin-right: 0;
+        }
+
+        .summary-item span {
+            display: block;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+    .actions {
+        margin-bottom: 20px;
+    }
+
+        .actions button {
+            padding: 10px 20px;
+            margin-right: 10px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            .actions button:hover {
+                background-color: #0056b3;
+            }
+
+    .filters {
+        display: flex;
+        margin-bottom: 20px;
+    }
+
+        .filters select,
+        .filters button {
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .filters button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+        }
+
+            .filters button:hover {
+                background-color: #0056b3;
+            }
+
+    .inventory-table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .table-header, .table-row {
+        display: flex;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .table-header {
+        background-color: #f9f9f9;
+        font-weight: bold;
+    }
+
+    .table-row:hover {
+        background-color: #f1f1f1;
+    }
+
+    .product-info {
+        display: flex;
+        align-items: center;
+    }
+
+        .product-info img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+
+    .table-header > div,
+    .table-row > div {
+        flex: 1;
+        text-align: center;
+    }
+</style>
+
+
+<div class="app-content pt-3 p-md-3 p-lg-4">
+    <div class="container-xl">
+
+        <div>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <span>
+                        Home
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708" />
+                        </svg>
+                    </span>
+                    <h5>Inventory</h5>
+                </div>
+
+                <div>
+                    <input type="text" readonly value="@Model.store_name" class="form-control" />
+                    <input type="hidden" id="store-id" readonly value="@Model.store_id" class="form-control" />
+                </div>
+
+            </div>
+            <div class="summary">
+                <div class="summary-item">All Inventory <span id="allInventory"></span></div>
+                <div class="summary-item">Low Stock <span id="lowInventory"></span></div>
+                <div class="summary-item">Out of Stock <span id="finishedInventory"></span></div>
+                <div class="summary-item">Recommendations <span id="all-inventory">1</span></div>
+            </div>
+            <div class="actions">
+                <button>Bulk Stock Update</button>
+                <button>Download Report</button>
+            </div>
+            <div class="filters">
+                <select id="categories">
+                    <option value="">Categories</option>
+                </select>
+                <select id="brands">
+                    <option value="">Brands</option>
+                </select>
+                <button>Apply</button>
+            </div>
+            <div class="inventory-table">
+
+                <table id="store-table">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Product Description</th>
+                            <th>Quantity</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div><!--//app-content-->
+</div><!--//app-wrapper-->
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 h1-label" id="exampleModalLabel"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="m-body">
+                <div>
+                    <form id="updateQuantityForm">
+                        <input type="hidden" name="productId" id="productId" />
+                        <input type="hidden" name="storeId" id="storeId" />
+                        <div class="mb-3">
+                            <label for="quantity" class="form-label">Product Name</label>
+                            <input type="text" name="quantity" id="product-name" class="form-control" min="0" />
+                            <label for="quantity" class="form-label">Current Quantity</label>
+                            <input type="number" name="quantity" id="current-quantity" class="form-control" min="0" />
+                            <label for="quantity" class="form-label">New Quantity</label>
+                            <input type="number" name="quantity" id="quantity" class="form-control" min="0" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="updateQuantityButton" class="btn btn-primary">Update Quantity</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        $('#store-table').DataTable({
+            searching: true,
+            paging: true,
+            pageLength: 10, // Number of rows per page
+            // Add other DataTable options here...
+        });
+        getTableData();
+
+    });
+
+    function getTableData() {
+        var storeId = $('#store-id').val();
+
+        $.ajax({
+            url: '@Url.Action("GetStockInStore", "Stock")',
+            type: 'GET',
+            dataType: "json",
+            data: { storeId: storeId },
+            success: function (data) {
+                displayStockLevel(data);
+                loadProducts(data);
+            },
+            error: function () {
+                console.error('Error occurred while loading products.');
+            }
+        });
+    }
+
+
+    function displayStockLevel(data) {
+        var allinventory = 0;
+        var lowinventory = 0;
+        var finishedinventory = 0;
+
+        data.forEach(function (item) {
+            allinventory++;
+
+            if (item.quantity === 0) {
+                finishedinventory++;
+            } else if (item.quantity <= 10) {
+                lowinventory++;
+            }
+        });
+
+        $('#allInventory').text(allinventory);
+        $('#lowInventory').text(lowinventory);
+        $('#finishedInventory').text(finishedinventory);
+    }
+
+    function loadProducts(data) {
+        var tbody = $("#table-body");
+        tbody.empty();
+        var pname = $("#product-name");
+        data.forEach(function (product, index) {
+            var row = $("<tr>");
+
+           /* row.append($("<td>").text(index + 1)); */
+            row.append($("<td>").text(product.product_name));
+            row.append($("<td>").text(product.product_desc));
+            row.append($("<td>").text(product.quantity));
+
+            var updateQuantityBtn = $('<button>', {
+                class: 'btn',
+                text: 'Update',
+                type: 'button',
+                'data-bs-toggle': 'modal',
+                'data-bs-target': '#exampleModal'
+            }).on('click', function () {
+                $('#productId').val(product.product_id);
+                $('#storeId').val(product.store_id);
+                $('#product-name').val(product.product_name);
+                $('#current-quantity').val(product.quantity);
+            });;
+            row.append(updateQuantityBtn);
+            tbody.append(row);
+
+        });
+    }
+
+     $(document).ready(function () {
+        $('#updateQuantityButton').click(function () {
+            var productId = $("#productId").val();
+            var storeId = $("#storeId").val();
+            var quantity = $("#quantity").val();
+
+            $.ajax({
+                url: '@Url.Action("AddStock", "Stock")',
+                type: "POST",
+                dataType: "json",
+                data: {
+                    store_id: storeId,
+                    product_id: productId,
+                    quantity: quantity
+                },
+                success: function (result) {                    
+                    $('#exampleModal').modal('hide'); 
+                    getTableData();
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error occurred:', error);
+                }
+            });
+        });
+     });
+</script>

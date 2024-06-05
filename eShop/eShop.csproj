@@ -2933,7 +2933,7 @@
     <Content Include="Areas\Seller\Views\Store\Edit.cshtml" />
     <Content Include="Areas\Seller\Views\Store\Index.cshtml" />
     <Content Include="Areas\Seller\Views\Product\SellerProducts.cshtml" />
-    <Content Include="Areas\Seller\Views\Store\StoreDashBoard.cshtml" />
+    <Content Include="Areas\Seller\Views\Home\StoreDashBoard.cshtml" />
     <Content Include="Areas\Seller\Views\Store\StoreError.cshtml" />
     <Content Include="Areas\Customer\Views\Profile\Index.cshtml" />
     <Content Include="Areas\Customer\Views\Shared\_AccountDetails.cshtml" />

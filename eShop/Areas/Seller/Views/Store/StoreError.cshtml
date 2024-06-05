@@ -1,9 +1,9 @@
-﻿
+﻿@model string
 @{
     ViewBag.Title = "StoreError";
-    Layout = "~/Areas/Seller/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Areas/Seller/Views/Shared/_SellerLayout.cshtml";
 }
 
-<h2 class="text-danger">You are not authorised.</h2>
+<h2 class="text-danger">@Model.ToString()</h2>
 @Html.ActionLink("Back", "Index","Store")
 

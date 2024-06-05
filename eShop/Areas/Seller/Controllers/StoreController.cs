@@ -14,8 +14,6 @@ namespace FurnitureShop.Areas.Seller.Controllers
 {
     public class StoreController : Controller
     {
-
-        // GET: Store
         private readonly IMapper mapper;
         private readonly IStoreService storeService;
         public StoreController(IMapper mapper, IStoreService storeService)
@@ -24,33 +22,9 @@ namespace FurnitureShop.Areas.Seller.Controllers
             this.storeService = storeService;
         }
 
-        //Store home page
-        public ActionResult StoreDashBoard(int storeId)
-        {
-            var userId = User.Identity.GetUserId();
-            var viewModel = storeService.GetStoreById(storeId);
 
-            if (viewModel != null)
-            {
-                return View(mapper.Map<StoreViewModel>(viewModel));
-            }
-            else
-            {
-                return RedirectToAction("StoreError");
-            }
-        }
-
-        public ActionResult StoreError()
-        {
-            return View();
-        }
-
-        public ActionResult StoreStock(int storeId)
-        {
-            var userId = User.Identity.GetUserId();
-            var storeStock = storeService.GetStoreById(storeId);
-            return View();
-        }
+        //List of all stores that belongs to a Seller
+        //GET: Seller/Store/Index
         public ActionResult Index()
         {
             var sellerId = User.Identity.GetUserId();
@@ -64,18 +38,27 @@ namespace FurnitureShop.Areas.Seller.Controllers
                 if (TempData["SuccessMessage"] != null)
                 {
                     ViewBag.Issuccess = TempData["SuccessMessage"];
-                }                
-                
+                }
+
                 return View(mapper.Map<List<StoreViewModel>>(storeService.GetAllStores(sellerId)));
             }
         }
 
-
-        public ActionResult Details(int id)
+        // Retrieves and displays details of a specific store for the current seller.
+        // Get: Seller/Store/Details/10
+        public ActionResult Details(int id = 0)
         {
-            var userid = User.Identity.GetUserId();
-            var result = storeService.GetStoreById(id);
-            return View(result);
+            if (id > 0)
+            {
+                var userid = User.Identity.GetUserId();
+                var store = mapper.Map<StoreViewModel>(storeService.GetStoreById(id));
+                if (store != null)
+                {
+                    return View(store);
+                }
+                return View("StoreError",null ,"Store Not Found.");
+            }
+            return View("StoreError", null, "Store Id is null");
         }
 
         // GET: Create store
@@ -104,15 +87,16 @@ namespace FurnitureShop.Areas.Seller.Controllers
             }
             return View(data);
         }
-
-
+        
+        //GET: Edit Store
         public ActionResult Edit(int id)
         {
             var userid = User.Identity.GetUserId();
             var st = storeService.GetStoreById(id);
-            return View(st);
+            return View(mapper.Map<StoreViewModel>(st));
         }
 
+        //POST: Edit Store
         [HttpPost]
         public ActionResult Edit(StoreViewModel data)
         {
@@ -126,13 +110,15 @@ namespace FurnitureShop.Areas.Seller.Controllers
             return View();
         }
 
+        //GET: Delete store
         public ActionResult Delete(StoreViewModel model)
         {
             var userId = User.Identity.GetUserId();
             var st = storeService.GetStoreById(model.store_id);
-            return View(st);
+            return View(mapper.Map<StoreViewModel>(st));
         }
 
+        //POST: Delete store
         [HttpPost]
         public ActionResult Delete(int id)
         {
@@ -140,7 +126,13 @@ namespace FurnitureShop.Areas.Seller.Controllers
             return RedirectToAction("Index");
 
         }
-
+        
+        public ActionResult StoreStock(int storeId)
+        {
+            var userId = User.Identity.GetUserId();
+            var storeStock = storeService.GetStoreById(storeId);
+            return View();
+        }
 
     }
 
