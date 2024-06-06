@@ -28,6 +28,7 @@
         padding: 20px;
         overflow: hidden;
         border: 1px solid #dedede;
+        
     }
 
     .btnsDiv {
@@ -74,27 +75,26 @@
                             </div>
                         </div>
                         <div class="col-10 p-1">
-                            @if (Model.url != null)
-                            {
+                            <ul class="slides">
+                                @if (Model.url != null)
+                                {
+                                    <li data-thumb="@Url.Content(Model.url)">
+                                        <div class="imgDiv ">
+                                            <img src="@Url.Content(Model.url)" class="img-fluid image example" alt="">
+                                        </div>
+                                    </li>
+                                }
 
-                                <ul class="slides">
-                                    <li data-thumb="@Url.Content(Model.url)">
+                                @foreach (var image in Model.ProductImages)
+                                {
+                                    <li data-thumb="@Url.Content(image.ImgUrl)">
                                         <div class="imgDiv ">
-                                            <img src="@Url.Content(Model.url)" class="img-fluid image example"  alt="">
+                                            <img src="@Url.Content(image.ImgUrl)" class="img-fluid image example" alt="">
                                         </div>
                                     </li>
-                                    <li data-thumb="@Url.Content(Model.url)">
-                                        <div class="imgDiv ">
-                                            <img src="@Url.Content(Model.url)" class="img-fluid p-1 image example2" alt="">
-                                        </div>
-                                    </li>
-                                    <li data-thumb="@Url.Content(Model.url)">
-                                        <div class="imgDiv">
-                                            <img src="@Url.Content(Model.url)" class="img-fluid image example3" alt="">
-                                        </div>
-                                    </li>
-                                </ul>
-                            }
+                                }
+
+                            </ul>
                         <div class=" p-2 btnsDiv  row">
                             @if (Model.isInWishlist)
                             {
@@ -192,40 +192,25 @@
 
 <script>
     $(document).ready(function () {
+        // Flexslider initialization
         $('.flexslider').flexslider({
             controlNav: "thumbnails",
             pauseOnAction: true,
             controlsContainer: $(".controlSlides"),
-        })
-    });
-
-    //image zomm
-    $(document).ready(function () {
-        $('.example').extm({
-            squareOverlay: true,
-            position: 'right',
-            rightPad: 40,
-            zoomLevel: 3,
-            imageSrc: $(this).attr('src'),
         });
-        $('.example2').extm({
-            position: 'right',
-            rightPad: 40,
-            zoomLevel: 3,
-            squareOverlay: true,
 
-        });
-        $('.example3').extm({
-            position: 'right',
-            rightPad: 40,
-            zoomLevel: 3,
-            squareOverlay: true,
+        // Image zoom initialization
+        $('.example').each(function () {
+            $(this).extm({
+                squareOverlay: true,
+                position: 'right',
+                rightPad: 40,
+                zoomLevel: 20,
+                zoomSize: 1000,
 
+               
+            });
         });
     });
 
-    $(document).ready(function () {
-
-
-    });
 </script>

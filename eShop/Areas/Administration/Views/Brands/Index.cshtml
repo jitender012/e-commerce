@@ -35,11 +35,11 @@
 
                 @if (item.brand_img != null)
                 {
-                    <img src="@Url.Content(item.brand_img)" alt="@item.brand_img" width="150" height="150" />
+                    <img src="@Url.Content(item.brand_img)" alt="@item.brand_img" width="80" height="80" />
                 }
                 else
                 {
-                    <span>No Image</span>
+                    <img src="~/Images/Utilities/No-Image-Placeholder.svg.png"  width="80" height="80"/>                   
                 }
             </td>
             <td>

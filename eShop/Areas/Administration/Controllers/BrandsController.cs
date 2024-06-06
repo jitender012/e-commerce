@@ -33,7 +33,7 @@ namespace FurnitureShop.Areas.Administration.Controllers
         // GET: Administration/ManageBrands
         public ActionResult Index()
         {
-            return View(brandService.GetAllBrands());
+            return View(mapper.Map<List<BrandsViewModel>>(brandService.GetAllBrands()));
         }
         [HttpGet]
         public ActionResult Create()
@@ -42,7 +42,7 @@ namespace FurnitureShop.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(HttpPostedFileBase file, BrandsViewModel data)
+        public ActionResult Create( BrandsViewModel data, HttpPostedFileBase file = null)
         {
             if (ModelState.IsValid)
             {
@@ -76,7 +76,7 @@ namespace FurnitureShop.Areas.Administration.Controllers
         }
         public ActionResult Details(int id)
         {
-            return View(brandService.GetBrandById(id));
+            return View(mapper.Map<BrandsViewModel>(brandService.GetBrandById(id)));
         }
         [HttpGet]
         public ActionResult Edit(int id)

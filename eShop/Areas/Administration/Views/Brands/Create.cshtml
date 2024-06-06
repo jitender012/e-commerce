@@ -5,14 +5,13 @@
     Layout = "~/Areas/Administration/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Create</h2>
+<h2>Create Brand</h2>
 
-@using (Html.BeginForm("Create", "Brands", FormMethod.Post, new { enctype = "multipart/form-data" })) 
+@using (Html.BeginForm("Create", "Brands", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>BrandsViewModel</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -22,31 +21,59 @@
                 @Html.ValidationMessageFor(model => model.brand_id, "", new { @class = "text-danger" })
             </div>
         </div>
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-6">
+                <div class="form-group">
+                    @Html.Label("Brand Name", htmlAttributes: new { @class = "control-label" })
+                    <div class="">
+                        @Html.EditorFor(model => model.brand_name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.brand_name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.brand_name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.brand_name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.brand_name, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.Label("Brand Image", htmlAttributes: new { @class = "control-label " })
+                    <div class="">
+                        <input type="file" name="ImageFile" class="form-control" id="formFile" />
+                        @Html.ValidationMessageFor(model => model.brand_img, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex justify-content-center  my-3">
+                <img id="imagePreview" src="#" alt="Image Preview" style="display:none; max-width: 250px; max-height: 250px;" />
+
+                </div>
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.brand_img, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" name="ImageFile" class="form-control" id="formFile" />
-                @Html.ValidationMessageFor(model => model.brand_img, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+
+        <div class=" col-sm-12 col-md-6">
+            <div class="my-md-0 my-md-3 mx-1">
+                <input type="submit" value="Create" class="btn btn-primary btn-lg btn-block" />
             </div>
         </div>
     </div>
 }
-
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('#formFile').change(function () {
+            var input = this;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#imagePreview').attr('src', e.target.result);
+                    $('#imagePreview').show();
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+    });
+
+</script>

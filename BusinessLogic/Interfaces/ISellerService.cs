@@ -29,7 +29,7 @@ namespace eShop.Business.Interfaces
 
     public interface IProductImageService
     {
-        List<ProductImageDomainModel> GetProductImages();
+        List<ProductImageDomainModel> GetProductImages(int productId=0);
         ProductImageDomainModel GetProductImageById(int? id);
         int AddProductImage(ProductImageDomainModel data);
         bool UpdateProductImage(ProductImageDomainModel data);

@@ -194,5 +194,7 @@ namespace FurnitureShop.Areas.Seller.Data
       
 
         public bool isInWishlist { get; set; }
+
+        public List<ProductImageViewModel> ProductImages { get; set; }
     }
 }

@@ -14811,3 +14811,44 @@ button.close:focus {
         width: 100%
     }
 }
+
+
+.my-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.my-btn-red {
+    background-color: red;
+    color: white;
+}
+.my-btn-submit {
+    background-color: var(--submit-color);
+    color: white;
+}
+.btn-block{
+    width:100%;
+}
+/*.my-btn-submit-small {
+    width: 25%;
+}
+
+.my-btn-submit-medium {
+    width: 35%;
+}
+
+.my-btn-submit-large {
+    width: 50%;
+}
+.my-btn-submit-full {
+    width: 100%;
+}*/
+:root {
+    --primary-color: #007bff; /* Blue */
+    --secondary-color: #6c757d; /* Gray */
+    --success-color: #28a745; /* Green */
+    --danger-color: #dc3545; /* Red */
+    --submit-color: #15a362;
+}

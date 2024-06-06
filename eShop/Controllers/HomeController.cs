@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using eShop.Business.Interfaces;
 using eShop.Business.Services.Admin_Services;
+using eShop.Business.Services.Seller_Services;
 using FurnitureShop.Areas.Administration.Data;
 using FurnitureShop.Areas.Seller.Data;
 using FurnitureShop.Infrastructure;
@@ -18,13 +19,15 @@ namespace FurnitureShop.Controllers
         private readonly IProductService productService;
         private readonly IMainCategoryService mainCategoryService;
         private readonly ICategoryService categoryService;
+        private readonly IProductImageService productImageService;
         private readonly IMapper mapper;
         private readonly IUserAddressService userAddressService;
-        public HomeController(IProductService productService, IMainCategoryService mainCategoryService, ICategoryService categoryService, IMapper mapper, IUserAddressService userAddressService)
+        public HomeController(IProductService productService, IMainCategoryService mainCategoryService, ICategoryService categoryService, IProductImageService productImageService, IMapper mapper, IUserAddressService userAddressService)
         {
             this.productService = productService;
             this.mainCategoryService = mainCategoryService;
             this.categoryService = categoryService;
+            this.productImageService = productImageService;
             this.mapper = mapper;
             this.userAddressService = userAddressService;
         }
@@ -81,13 +84,23 @@ namespace FurnitureShop.Controllers
                 return View("Error");
             }
             var product = productService.GetProductById(id);
+            var productImages = productImageService.GetProductImages(id.Value);
+
             ProductDetailsViewModel productDetails = new ProductDetailsViewModel()
             {
                 product_id = product.product_id,
                 product_name = product.product_name,
-    
+                url = product.url,
+
                 categoryName = product.category_id.ToString(),
-                brandName = product.brand_id.ToString()
+                brandName = product.brand_id.ToString(),
+                
+                ProductImages = productImages.Select(x => new ProductImageViewModel()
+                {
+                    ImgId = x.ImgId,
+                    ImgUrl = x.ImgUrl,
+                    productId = x.productId
+                }).ToList()
             };
             if (product == null)
             {
@@ -105,7 +118,7 @@ namespace FurnitureShop.Controllers
             {
                 searchWord.ToLower();
 
-                var products = productService.GetProducts(null, searchWord);
+                var products = productService.GetProducts(searchWord, null);
                 if (products != null)
                 {
                     var productsVM = mapper.Map<List<ProductViewModel>>(products);
