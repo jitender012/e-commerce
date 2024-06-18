@@ -23,4 +23,8 @@ namespace eShop.Business.Interfaces
         bool UpdateUserAddress(UserAddressDomainModel data);
         bool DeleteUserAddress(int id);
     }
+    public interface ICheckoutService
+    {
+
+    }
 }

@@ -9,7 +9,11 @@ namespace FurnitureShop.Areas.Customer.Data
 {
     public class CheckoutModel
     {
-        public ProductDetailsViewModel productDetails { get; set; }
-        public UserDetails userDetails { get; set; }
+        public string userName { get; set; }
+        public string mobile { get; set; }
+        public string email{ get; set; }
+        public string address{ get; set; }
+        public List<ProductViewModel> products { get; set; }
     }
+
 }

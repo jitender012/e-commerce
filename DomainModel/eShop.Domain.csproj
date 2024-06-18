@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="BannerDomainModel.cs" />
     <Compile Include="BrandDomainModel.cs" />
+    <Compile Include="CheckoutDomainModel.cs" />
     <Compile Include="ProductImageDomainModel.cs" />
     <Compile Include="StockDomainModel.cs" />
     <Compile Include="UserCartDomainModel.cs" />

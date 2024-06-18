@@ -45,6 +45,7 @@ namespace FurnitureShop
             container.RegisterType<IUserAddressService, UserAddressService>();
             container.RegisterType<IProductImageService,ProductImageService>();
             container.RegisterType<IStockService, StockSrvices>();
+            container.RegisterType<ICheckoutService, CheckoutService>();
             container.RegisterType<IUnitOfWork, UnitOfWork>();          
 
             container.RegisterInstance<IMapper>(config.CreateMapper());

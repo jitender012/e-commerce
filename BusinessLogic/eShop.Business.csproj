@@ -87,6 +87,7 @@
     <Compile Include="Services\Admin Services\BrandService.cs" />
     <Compile Include="Services\Admin Services\CategoryService.cs" />
     <Compile Include="Services\Admin Services\MainCategoryService.cs" />
+    <Compile Include="Services\Customer Services\CheckoutService.cs" />
     <Compile Include="Services\Seller Services\ProductImageService.cs" />
     <Compile Include="Services\Seller Services\ProductService.cs" />
     <Compile Include="Services\Seller Services\StoreService.cs" />

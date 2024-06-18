@@ -6,48 +6,41 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using FurnitureShop.Areas.Customer.Data;
-
+using eShop.Business.Interfaces;
+using FurnitureShop.Areas.Seller.Data;
+using AutoMapper;
 
 namespace FurnitureShop.Areas.Customer.Controllers
 {
+    [Authorize(Roles ="Customer")]
     public class CheckoutController : Controller
     {
-        private ApplicationUserManager _userManager;        
-        //private readonly CheckoutService _checkoutService;
+        private readonly IUserAddressService userAddressService;
+        private readonly ICheckoutService checkoutService;
+        private readonly IProductService productService;
+        private readonly IMapper mapper;
 
-        //public CheckoutController(CheckoutService checkoutService)
-        //{           
-        //    _checkoutService = checkoutService;
-        //}
-        public CheckoutController(ApplicationUserManager userManager)
-        {
-            UserManager = userManager;           
+        public CheckoutController(ICheckoutService checkoutService, IUserAddressService userAddressService, IProductService productService, IMapper mapper)
+        {            
+            this.checkoutService = checkoutService;
+            this.userAddressService = userAddressService;
+            this.productService = productService;
+            this.mapper = mapper;
         }
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
-
+              
         // GET: Customer/Checkout
-        //public ActionResult Checkout(int pid)
-        //{
-        //    ViewBag.Message = "Login first";
-        //    if (User.Identity.IsAuthenticated)
-        //    {
-        //        var user = UserManager.FindById(User.Identity.GetUserId());
-                
+        public ActionResult Checkout(int pid)
+        {
+            CheckoutModel checkout = new CheckoutModel();
+            ProductViewModel product= mapper.Map<ProductViewModel>(productService.GetProductById(pid));
+            UserAddressViewModel address = mapper.Map<UserAddressViewModel>(userAddressService.GetAllUserAddress(User.Identity.GetUserId()).FirstOrDefault());
 
-        //        //var data = _checkoutService.checkout(user, pid);
-        //        return View(data);
-        //    }
-        //    else return RedirectToAction("Login", "Account", new { area = "" });
-        //}
+            checkout.email= User.Identity.GetUserName();
+            checkout.userName= User.Identity.GetUserName();
+            checkout.products = new List<ProductViewModel> { product };
+            checkout.address = address.Address1 + " " + address.City;
+            checkout.mobile = address.PhoneNumber;
+            return View(checkout);
+        }
     }
 }

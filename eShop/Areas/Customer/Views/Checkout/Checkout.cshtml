@@ -1,4 +1,5 @@
-﻿@{
+﻿@model FurnitureShop.Areas.Customer.Data.CheckoutModel
+@{    
     ViewBag.Title = "Checkout";
     Layout = "~/Views/Shared/_CustomerLayout.cshtml";
 }
@@ -38,7 +39,7 @@
                             <p class="n-box">1</p>
                             <div class="ml-5">
                                 <p>Login</p>
-                                Jitesh Kumar 898876756
+                                @Model.userName @Model.mobile
                             </div>
 
                         </div>
@@ -53,7 +54,7 @@
                             <p class="n-box">2</p>
                             <div class="ml-5" style="max-width:500px">
                                 <p>DELIVERY ADDRESS</p>
-                                HTTP response to send back to the client. This response may include a redirect to a confirmation page.
+                               @Model.address
                             </div>
 
                         </div>
