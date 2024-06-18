@@ -13,12 +13,11 @@ This is an E-commerce website developed using ASP.NET MVC 5. The project follows
 
 ## Features
 - User Authentication and Authorization using ASP.NET Identity
-- Product Catalog with Search and Filtering
 - Shopping Cart functionality
-- Order Management
-- Admin Dashboard for Product Management
 - Responsive design using Bootstrap 5
 - AJAX for dynamic content updates
+- Order Management
+- Product Catalog with Search and Filtering
 
 ## Technologies Used
 - **ASP.NET MVC 5**: Framework for building web applications.
