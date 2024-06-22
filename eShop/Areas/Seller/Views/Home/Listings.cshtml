@@ -6,6 +6,7 @@
 }
 <style>
     body, html {
+        overflow-y: auto;
         margin: 0;
         padding: 0;
         font-family: Arial, sans-serif;
@@ -72,6 +73,21 @@
     .switch-btn {
         cursor: pointer;
     }
+
+    .table-container {
+        width: 100%;
+        overflow-x: auto;
+        /*overflow-y: hidden;*/
+        /*white-space: nowrap;*/
+       /* border: 1px solid #ddd;*/
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+
 </style>
 
 
@@ -79,13 +95,14 @@
 
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div>
-            <span>
-                Home
+            <span style="font-size:14px">
+                <a href="@Url.Action("Home", "Home", new {area="Seller"})"> Home</a>
+               
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708" />
                 </svg>
             </span>
-            <h5>Listing Management</h5>
+            <h6>Listing Management</h6>
         </div>
 
         <div>
@@ -96,19 +113,21 @@
     </div>
 
     <div class="row mb-3">
-        <div class="col-md-2">
+        <div class="col-6 col-lg-3">
             <div class="stat-box text-center py-1">
                 <span id="activeProducts">
-
-                </span> Active Listings
+                </span>
+                <br />
+                Active Listings
             </div>
         </div>
 
-        <div class="col-md-2">
+        <div class="col-6 col-lg-3">
             <div class="stat-box text-center py-1">
-                <span id="inActiveProducts">
 
+                <span id="inActiveProducts">
                 </span>
+                <br />
                 Inactive Listings
             </div>
         </div>
@@ -138,22 +157,23 @@
             <button class="btn btn-outline-secondary">Reset</button>
         </div>
     </div>
-
-    <table class="table table-bordered" id="productTable">
-        <thead>
-            <tr>
-                <th scope="col"></th>
-                <th scope="col">Product Details</th>
-                <th scope="col">Listing Price</th>
-                <th scope="col">Final Price</th>
-                <th scope="col">Stock</th>
-                <th scope="col">Status</th>
-                <th scope="col">Action</th>
-            </tr>
-        </thead>
-        <tbody id="dataContainer">
-        </tbody>
-    </table>
+    <div class="table-container">
+        <table class="table " id="productTable">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Product Details</th>
+                    <th scope="col">Listing Price</th>
+                    <th scope="col">Final Price</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Manage</th>
+                </tr>
+            </thead>
+            <tbody id="dataContainer">
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <!-- Modal -->
@@ -295,7 +315,7 @@
         data: { 'pId': pId },
         success: function (data) {
             if (data.length > 0) {
-                
+
                 console.log(data);
                 $('.h1-label').text("Update Inventory for ");
                 data.forEach(function (storeStock,index) {
@@ -309,9 +329,9 @@
                     else {
                         tr.append('<input type="number" id="qtyValue'+index+'" class="form-control" style="width:100px; margin:5px 0px 0px 20px" value="' + storeStock.qty + '"/>');
                     }
-                    
+
                     var newQty = parseInt($('#qtyValue' + index).val(), 10);
-                  
+
                     tr.append('<td><button class="btn" onclick="addStock(' + storeStock.store_id + ', ' + pId + ', ' + newQty + ')">Update</button></td>');
 
 
@@ -321,7 +341,7 @@
                     var newQty = parseInt($('#qtyValue' + index).val(), 10);
                     if (isNaN(newQty)) {
                         console.error('Invalid quantity value');
-                        return 0; 
+                        return 0;
                     }
                     return newQty;
                 }
