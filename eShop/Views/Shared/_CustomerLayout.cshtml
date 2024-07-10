@@ -81,19 +81,19 @@
                     </a>
                 </div>
 
-                <div class="col-6 col-md-3 order-md-3 col-lg-2 text-end align-content-center text-md-center ">
-                    <div class="">
+                <div class="col-6 col-md-3 order-md-3 col-lg-2 text-end align-content-center justify-content-end text-md-center ">
+                   
                         <div class="">
                             @Html.Partial("_LoginPartial")
 
                         </div>
-                    </div>
+                    
                 </div>
 
                 <div class="col-12 col-sm-12 col-md-7 col-lg-8 order-md-2 pt-1 header mb-md-0 mb-2">
                     <div class="row">
                         <!-- search -->
-                        <div class="col-12 agileits_search">
+                        <div class="col-12 p-0 agileits_search">
                             <div class="d-flex">
                                 @using (Html.BeginForm("Search", "Home", FormMethod.Get, new { @class = "form-inline w-100", role = "search" }))
                                 {
@@ -106,9 +106,7 @@
                                     </button>
 
                                 }
-                            </div>
-                          
-
+                            </div>                          
                         </div>
                     </div>
                 </div>

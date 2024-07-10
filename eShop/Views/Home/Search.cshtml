@@ -3,6 +3,14 @@
 
     Layout = "~/Views/Shared/_CustomerLayout.cshtml";
 }
+
+<style>
+    @@media (max-width: 568px) {
+        .filter-nav {
+            display: none;
+        }
+    }
+</style>
 @*<a href="~/Views/Partial_Views/_NavWithCategories.cshtml">~/Views/Partial_Views/_NavWithCategories.cshtml</a>*@
 @Html.Partial("~/Views/Partial_Views/_NavWithCategories2.cshtml")
 <div class="ads-grid  ">
@@ -10,7 +18,7 @@
 
         @*@Html.Partial("~/Views/Partial_Views/_NavWithCategories.cshtml")*@
         <div class="row">
-            <div class="col-lg-2 col-sm-4 col-md-3 mt-lg-0 mt-4 me-1 p-lg-0 border-right shadow-sm">
+            <div class="col-lg-2 col-sm-4 col-md-3 mt-lg-0 mt-4 me-1 p-lg-0 border-right shadow-sm filter-nav">
                 <div class="side-bar p-sm-4 p-3">
                     <div class="search-hotel py-2">
                         <h3 class="agileits-sear-head mb-3">Filters</h3>

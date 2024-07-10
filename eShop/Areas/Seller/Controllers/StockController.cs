@@ -28,11 +28,12 @@ namespace FurnitureShop.Areas.Seller.Controllers
             this.storeService = storeService;
             this.productService = productService;
         }
+
         //GET: Seller/Stock
         public JsonResult AddToInventory(int pId)
         {
+            List<StoreDomainModel> stores = storeService.GetAllStores(User.Identity.GetUserId());
             List<StoreStockDomainModel> storeStock = new List<StoreStockDomainModel>();
-            var stores = storeService.GetAllStores(User.Identity.GetUserId());
 
             foreach (var item in stores)
             {

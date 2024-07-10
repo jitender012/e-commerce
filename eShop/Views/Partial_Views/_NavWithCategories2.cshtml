@@ -7,8 +7,74 @@
         border-bottom: 2px solid #d7d7d7;
         /*box-shadow: 0px 4px 10px rgb(128, 128, 128);*/
     }
+    @@media (max-width: 568px) {
+        .cat-com {
+            display: none;
+        }
+
+        .cat-mob {
+            display: flex;
+            overflow-x: auto;
+            padding: 5px 10px 5px 10px;
+        }
+
+            .cat-mob::-webkit-scrollbar {
+                display: none; /* Safari and Chrome */
+            }
+
+        .t12 {
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .c1img1 {
+            height:
+        }
+
+        .ecatdiv {
+            padding: 10px;
+        }
+    }
+    @@media (min-width: 568px) {
+        .cat-mob {
+            display: none;
+        }
+    }
 </style>
-<div class="navbar-inner  bg-warning-subtle bg-gradient category-div">
+@{
+    var allCategories = ViewBag.NavCategories as List<FurnitureShop.Areas.Administration.Data.DisplayCategoryViewModel>;
+}
+<div class="cat-mob">
+    @if (allCategories != null)
+    {
+        <div class="ecatdiv">
+            <a href="@Url.Action()">
+                <div class="c1img1">
+                    <img src="~/Images/Utilities/No-Image-Placeholder.svg.png" height="60" width="60" alt="" />
+                </div>
+                <div class="t12">
+                    Categories
+                </div>
+            </a>
+        </div>
+
+        foreach (var category in allCategories)
+        {
+            <div class="ecatdiv">
+                <a href="@Url.Action()">
+                    <div class="c1img1">
+                        <img src="@Url.Content(category.mainCategoryImage)" height="60" width="60" alt="@category.mainCategoryName" />
+                    </div>
+                    <div class="t12">
+                        @category.mainCategoryName
+                    </div>
+                </a>
+
+            </div>
+        }
+    }
+</div>
+<div class="navbar-inner  bg-warning-subtle bg-gradient category-div cat-com">
     <div class="container-fluid ">
         <nav class="navbar navbar-expand-lg ">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -16,9 +82,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                @{
-                    var allCategories = ViewBag.NavCategories as List<FurnitureShop.Areas.Administration.Data.DisplayCategoryViewModel>;
-                }
+              
                 <ul class="navbar-nav  ml-auto text-center mr-auto">
                     @if (Model != null)
                     {
@@ -26,16 +90,16 @@
                         foreach (var Category in allCategories)
                         {
 
-                            <li class="ulli nav-item dropdown mr-lg-2 mb-lg-0 mb-2">                                
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <li class="ulli nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
+                                <a class="nav-link dropdown-toggle align-items-center" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     @Category.mainCategoryName
                                 </a>
-                                <div class="dropdown-menu">
+                                <div class="dropdown-menu m-0">
                                     <div class="agile_inner_drop_nav_info p-4">
                                         <div class="row">
                                             <div class="col-12 multi-gd-img">
                                                 <ul class="multi-column-dropdown">
-                                                   
+
                                                     @foreach (var subCategory in Category.subCategory)
                                                     {
                                                         <li>

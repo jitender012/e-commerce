@@ -8,14 +8,85 @@
         font-family: inter_semi_bold, fallback-inter_semi_bold, Arial, sans-serif;
         font-size: 14px;
     }
+
     .innerBox {
         box-shadow: #a7a7a7 0 0 3px -1px;
     }
+    /*.category-div {
+        overflow-x: hidden;*/ /* Default state for larger screens */
+    /*overflow-y: initial;*/ /* Default state for larger screens */
+    /*width: 100%;*/ /* Default width */
+    /*}*/
+
+    /* Mobile styles */
+    @@media (max-width: 568px) {
+        .cat-com{
+            display:none;
+        }
+        .cat-mob {
+            display: flex;
+            overflow-x:auto;
+            padding:5px 10px 5px 10px;
+        }
+            .cat-mob::-webkit-scrollbar {
+                display: none; /* Safari and Chrome */
+            }
+        .t12{
+            font-size:12px;
+            text-align:center;
+        }
+        .c1img1{
+            height:
+        }
+        .ecatdiv{
+            padding:10px;
+        }
+    }
+
+    @@media (min-width: 568px) {
+        .cat-mob{
+            display:none;
+        }      
+    }
 </style>
-<div class="navbar-inner p-2 bg-warning-subtle" style="background-color: #eaeaea">
+@{
+    var allCategories = ViewBag.NavCategories as List<FurnitureShop.Areas.Administration.Data.DisplayCategoryViewModel>;
+}
+
+<div class="cat-mob">
+    @if (allCategories != null)
+    {
+        <div class="ecatdiv">
+            <a href="@Url.Action()">
+                <div class="c1img1">
+                    <img src="~/Images/Utilities/No-Image-Placeholder.svg.png" height="60" width="60" alt="" />
+                </div>
+                <div class="t12">
+                   Categories
+                </div>
+            </a>
+        </div>
+
+        foreach (var category in allCategories)
+        {
+            <div class="ecatdiv">
+                <a href="@Url.Action()">
+                    <div class="c1img1">
+                        <img src="@Url.Content(category.mainCategoryImage)" height="60" width="60" alt="@category.mainCategoryName" />
+                    </div>
+                    <div class="t12">
+                        @category.mainCategoryName
+                    </div>
+                </a>
+
+            </div>
+        }
+    }
+</div>
+<div class="navbar-inner p-2 bg-warning-subtle  cat-com" style="background-color: #eaeaea">
     <div class="innerBox">
         <nav class="navbar navbar-expand-lg bg-white">
-            <button class="navbar-toggler"  type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25   " viewBox="0 0 50 50">
@@ -24,9 +95,7 @@
                 </span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                @{
-                    var allCategories = ViewBag.NavCategories as List<FurnitureShop.Areas.Administration.Data.DisplayCategoryViewModel>;
-                }
+              
                 <ul class="navbar-nav  ml-auto text-center mr-auto">
                     @if (allCategories != null)
                     {
@@ -35,7 +104,7 @@
                         {
 
                             <li class="ulli nav-item dropdown ">
-             
+
                                 <div>
                                     @if (Category.mainCategoryImage != null)
                                     {
@@ -45,20 +114,17 @@
 
                                     <div class="categoryName">
                                         <a class="nav-link " href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                          
+
                                             @Category.mainCategoryName
                                             <span style="height:23px;width:23px; margin:0">
                                                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Arrow / Caret_Down_MD"> <path id="Vector" d="M16 10L12 14L8 10" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg>
-
                                             </span>
-                                          
-                                           
                                         </a>
                                     </div>
                                 </div>
 
-                                <div class="dropdown-menu">
-                                    <div class="agile_inner_drop_nav_info p-4">
+                                <div class="dropdown-menu m-0">
+                                    <div class="agile_inner_drop_nav_info p-3">
                                         <div class="row">
                                             <div class="col-12 multi-gd-img">
                                                 <ul class="multi-column-dropdown">

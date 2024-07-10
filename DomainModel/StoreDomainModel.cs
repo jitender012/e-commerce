@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace eShop.Domain
 {
     public class StoreDomainModel
@@ -29,10 +30,12 @@ namespace eShop.Domain
     }
     public class StoreStockDomainModel
     {
-        public int? store_id { get; set; }        
-        public string store_name { get; set; }
-        public int qty { get; set; }
         public int product_id { get; set; }
+        public int product_name { get; set; }
+        public int? store_id { get; set; }        
+        public int qty { get; set; }
+        public string store_name { get; set; }
+        public List<StockDomainModel> stock { get; set; }
     }
 
 }

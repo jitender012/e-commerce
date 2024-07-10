@@ -82,7 +82,8 @@ namespace FurnitureShop.Areas.Administration.Controllers
         public ActionResult Edit(int id)
         {
             var result = brandService.GetBrandById(id);
-            return View(result);
+            
+            return View(mapper.Map<BrandsViewModel>(result));
         }
         [HttpPost]
         public ActionResult Edit(BrandsViewModel data)

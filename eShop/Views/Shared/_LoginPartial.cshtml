@@ -85,34 +85,41 @@
             transform: scaleY(1);
         }
     }
-    ul{
-        justify-content:space-between;
-    }
-    ul li a {
-        font-family:Arial;
-        display: flex;
+
+    ul {
         justify-content: space-between;
-        width:auto;
     }
 
-        ul li a span {
-            width: 27px;
-            height: 27px;
-            color:dimgray; 
-            font-weight:500;
-            margin:0px 4px 0px 4px ;
+        ul li a {
+            font-family: Arial;
+            display: flex;
+            justify-content: space-between;
+            width: auto;
         }
 
-  
+            ul li a span {
+                width: 27px;
+                height: 27px;
+                color: dimgray;
+                font-weight: 500;
+                margin: 0px 4px 0px 4px;
+            }
+    /*   .nav-right-link span{
+        width:40px;
+        height:40px;
+    }*/
+    .right-btn {
+        border-radius: 14px;
+    }
 </style>
 
 @if (User.Identity.IsAuthenticated)
 {
 
 
-    <ul class="menu">
+    <ul class="menu ">
         <li class="dropdown12 dropdown-6">
-            <div class="py-2 ">
+            <div class="py-2 my-1">
 
                 <a href="#">
                     <span>
@@ -123,7 +130,7 @@
             </div>
 
             <ul class="dropdown_menu dropdown_menu--animated dropdown_menu-6">
-                <a href="@Url.Action("Index","Profile", new {area="Customer"})">
+                <a href="@Url.Action("Index", "Profile", new { area = "Customer" })">
                 <li class="dropdown_item-2">Your Profile</li>
                 </a>
                 <li class="dropdown_item-2">Orders</li>
@@ -136,7 +143,7 @@
         {
             <li>
                 <div class="py-2 ">
-                    <a href="@Url.Action( "Index", "Cart", new { area = "Customer" })" id="loginLink" class="nav-link">
+                    <a href="@Url.Action("Index", "Cart", new { area = "Customer" })" id="loginLink" class="nav-link">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="15" height="15" style="color:dimgray"><!--!Font Awesome Free 6.5.1 by  https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z" /></svg>
                         </span>
@@ -151,29 +158,33 @@
 }
 else
 {
-    <ul class="navbar-nav navbar-right d-flex flex-row ">
-        <li>
-            <div>
-                <a href="@Url.Action( "Login","Account")" id="loginLink" class="nav-link">
-                    <span>
-                        <svg viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M2.00098 11.999L16.001 11.999M16.001 11.999L12.501 8.99902M16.001 11.999L12.501 14.999" stroke="#fb5a04" stroke-width="1.344" stroke-linecap="round" stroke-linejoin="round"></path> <path opacity="0.5" d="M9.00195 7C9.01406 4.82497 9.11051 3.64706 9.87889 2.87868C10.7576 2 12.1718 2 15.0002 2L16.0002 2C18.8286 2 20.2429 2 21.1215 2.87868C22.0002 3.75736 22.0002 5.17157 22.0002 8L22.0002 16C22.0002 18.8284 22.0002 20.2426 21.1215 21.1213C20.2429 22 18.8286 22 16.0002 22H15.0002C12.1718 22 10.7576 22 9.87889 21.1213C9.11051 20.3529 9.01406 19.175 9.00195 17" stroke="#fb5a04" stroke-width="1.344" stroke-linecap="round"></path> </g></svg>
-                    </span>
-                    <span>Login</span>
-                </a>
-            </div>
-           
-        </li>
-        <li>
-            <a href="@Url.Action( "Login", "Account")" id="loginLink" class="nav-link">   
-                <span>
-                    <svg viewBox="0 0 1024 1024" fill="#ff600a" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M800.8 952c-31.2 0-56-24.8-56-56s24.8-56 56-56 56 24.8 56 56-25.6 56-56 56z m-448 0c-31.2 0-56-24.8-56-56s24.8-56 56-56 56 24.8 56 56-25.6 56-56 56zM344 792c-42.4 0-79.2-33.6-84-76l-54.4-382.4-31.2-178.4c-2.4-19.2-19.2-35.2-37.6-35.2H96c-13.6 0-24-10.4-24-24s10.4-24 24-24h40.8c42.4 0 80 33.6 85.6 76l31.2 178.4 54.4 383.2C309.6 728 326.4 744 344 744h520c13.6 0 24 10.4 24 24s-10.4 24-24 24H344z m40-128c-12.8 0-23.2-9.6-24-22.4-0.8-6.4 1.6-12.8 5.6-17.6s10.4-8 16-8l434.4-32c19.2 0 36-15.2 38.4-33.6l50.4-288c1.6-13.6-2.4-28-10.4-36.8-5.6-6.4-12.8-9.6-21.6-9.6H320c-13.6 0-24-10.4-24-24s10.4-24 24-24h554.4c22.4 0 42.4 9.6 57.6 25.6 16.8 19.2 24.8 47.2 21.6 75.2l-50.4 288c-4.8 41.6-42.4 74.4-84 74.4l-432 32c-1.6 0.8-2.4 0.8-3.2 0.8z" fill=""></path></g></svg>
+    <div class="justify-content-around d-flex flex-row ">
+
+        <a href="@Url.Action("Login", "Account")" id="loginLink" class="btn btn-primary login-btn right-btn">
+            <div class="d-flex flex-row ">
+                <span>Login</span>&nbsp;&nbsp;
+                <span class="">
+                    <i class="fa fa-sign-in"></i>
                 </span>
-                
-                <span>Cart</span>
-            </a>
-        </li>
-    </ul>
+            </div>
+        </a>
+
+
+
+        <a href="@Url.Action("Login", "Account")" id="loginLink" class="btn btn-danger py-1 right-btn">
+            <span>
+                <i class="fa fa-shopping-cart"></i>
+            </span>
+        </a>
+    </div>
 }
+
+
+
+
+
+
+
 
 @*Logout modal*@
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

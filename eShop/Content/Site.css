@@ -18,3 +18,7 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.nav-right-link{
+    background-color:red;
+}
